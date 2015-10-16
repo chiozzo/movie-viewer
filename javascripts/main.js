@@ -19,7 +19,7 @@ requirejs.config({
   }
 });
 
-require(["jquery", "q", "search", "lodash"], function($, q, search, _) {
+require(["jquery", "q", "search", "lodash", "bootstrap", "material"], function($, q, search, _, bootstrap, material) {
 
   $.material.init();
 
