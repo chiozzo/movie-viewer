@@ -29,13 +29,15 @@ require(["jquery", "q", "search", "lodash", "bootstrap", "material"], function($
       .then(function(movie){
         console.log("movie", movie);
         //this will save the movie object to our firebase account
-        $.ajax({
-          url: "https://movie-viewer.firebaseio.com/movie.json",
-          method: "POST",
-          data: JSON.stringify(movie)
-          }).done(function(movie) {
-            console.log("Your new movie is ", movie);
-          });
+
+        // $.ajax({
+        //   url: "https://movie-viewer.firebaseio.com/movie.json",
+        //   method: "POST",
+        //   data: JSON.stringify(movie)
+        //   }).done(function(movie) {
+        //     console.log("Your new movie is ", movie);
+        //   });
+
       //   movies = Object.keys( movies ).map(key => movies[ key ]);
       //   console.log("this should be an array", movies);
 

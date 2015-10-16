@@ -12,7 +12,7 @@ define(function(require) {
         userInput = userInput.split(" ").join("+");
         console.log("user input +", userInput);
         //ajax call using promises
-        $.ajax({ url : "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&r=json" }).done(function(movie){
+        $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&y=&plot=short&r=json" }).done(function(movie){
           console.log("movie", movie);
           //return movie object
           deferred.resolve(movie);
