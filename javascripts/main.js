@@ -1,8 +1,4 @@
-<<<<<<< HEAD
- requirejs.config({
-=======
 requirejs.config({
->>>>>>> 6143b4400ab39f2b7aa363effb518a00e95a1084
   baseUrl: "./javascripts",
   paths:{
     "jquery": "../lib/bower_components/jquery/dist/jquery.min",
