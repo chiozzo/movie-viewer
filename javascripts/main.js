@@ -21,15 +21,22 @@ requirejs.config({
 
 require(["jquery", "q", "search", "lodash", "bootstrap", "material"], function($, q, search, _, bootstrap, material) {
 
+//Initialize material design for project
   $.material.init();
+
+//this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
+  $('#login').on('click', function () {
+    console.log("click");
+    $('#myModal').modal('toggle');
+  });
 
 //this code will be used to grab the user input for the search bar.  The variable will then be injected/ concatenated into the ajax request url.
   $('#send').click(function(movie){
     search.result()
       .then(function(movie){
         console.log("movie", movie);
-        //this will save the movie object to our firebase account
 
+        //this will save the movie object to our firebase account
         // $.ajax({
         //   url: "https://movie-viewer.firebaseio.com/movie.json",
         //   method: "POST",
@@ -49,7 +56,6 @@ require(["jquery", "q", "search", "lodash", "bootstrap", "material"], function($
       //   $("#movie").html(movie({title : title}));
       // });
 
-
-      });
+    });
   });
 });
