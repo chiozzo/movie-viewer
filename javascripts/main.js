@@ -35,27 +35,21 @@ require(["jquery", "q", "search", "lodash", "bootstrap", "material"], function($
     search.result()
       .then(function(movie){
         console.log("movie", movie);
+        console.log("what the?", movie.Search[0].imdbID);
 
-        //this will save the movie object to our firebase account
-        // $.ajax({
-        //   url: "https://movie-viewer.firebaseio.com/movie.json",
-        //   method: "POST",
-        //   data: JSON.stringify(movie)
-        //   }).done(function(movie) {
-        //     console.log("Your new movie is ", movie);
-        //   });
-
-      //   movies = Object.keys( movies ).map(key => movies[ key ]);
-      //   console.log("this should be an array", movies);
-
-      //   var movies = movies.map(movie => {
-      //     movie.title = _.find(title, {id:movie.title}).label;
-      //   return movie;
-      //   })
+        // var movie = movies.map(movie => {
+        //   movie.Title = _.find(Title, {id:movie.Title}).label;
+        //   console.log("doing the lodash thing", movie);
+        // return movie;
+        // });
       // require(['hbs!../templates/movie'], function(movie) {
       //   $("#movie").html(movie({title : title}));
       // });
 
     });
   });
+  $('.img-wrap .close').on('click', function() {
+    var id = $(this).closest('.img-wrap').find('img').data('id');
+    alert('remove picture: ' + id);
+});
 });
