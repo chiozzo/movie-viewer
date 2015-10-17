@@ -20,19 +20,20 @@ requirejs.config({
 });
 
 require(
-  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "authenticate", "login"], 
-  function($, q, search, _, bootstrap, getUsers, handlebars,firebase, authenticate, login, material) {
+  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "login"],
+  function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, login) {
 
 
-  // var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
+  var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
 
   // login.load();
 
 
-  // //click event to login user
-  // $(document).on('click', "#sendLogin", function() {
-  //   authenticate.logInUser(firebaseRef);
-  // });
+  //click event to login user
+  $(document).on('click', "#sendLogin", function() {
+    authenticate.logInUser(firebaseRef);
+    $('#myModal').modal('toggle');
+  });
 
 //Initialize material design for project
   $.material.init();
