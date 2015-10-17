@@ -31,11 +31,20 @@ require(["jquery", "q", "search", "lodash", "bootstrap", "material"], function($
   });
 
 //this code will be used to grab the user input for the search bar.  The variable will then be injected/ concatenated into the ajax request url.
-  $('#send').click(function(movie){
-    search.result()
-      .then(function(movie){
-        console.log("movie", movie);
-        console.log("what the?", movie.Search[0].imdbID);
+  $('#send').click(function(){
+    search.result($('#user_input').val())
+      .then(function(searchResult){
+        console.log("search result", searchResult);
+        var newResult = searchResult.map(function(currentValue, i, array) {
+          console.log("imdbID", array[i].imdbID);
+          return {
+            title: array[i].Title,
+            year: array[i].Year,
+            imdbID: array[i].imdbID,
+            poster: "http://img.omdbapi.com/?i=" + array[i].imdbID + "&apikey=8513e0a1"
+          };
+        });
+        $('#searchResultModal').modal('toggle');
 
         // var movie = movies.map(movie => {
         //   movie.Title = _.find(Title, {id:movie.Title}).label;
