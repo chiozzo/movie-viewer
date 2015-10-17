@@ -33,70 +33,37 @@ require(["jquery", "search", "q", "lodash", "bootstrap", "material",  "hbs!../te
   });
 
 //this code will be used to grab the user input for the search bar.  The variable will then be injected/ concatenated into the ajax request url.
-  $('#send').click(function(movie){
-    search.result()
-      .then(function(movieData){
-        console.log("movieData", movieData);
-        //turn promise data into an array to use with handlebars
-        $("#listBox").append(movieHB({movieItem: movieData}));
-        // $("#listBox").append("Test");
-        console.log("dom Write");
+
+  $('#send').click(function(){
+    search.result($('#user_input').val())
+      .then(function(searchResult){
+        console.log("search result", searchResult);
+        var newResult = searchResult.map(function(currentValue, i, array) {
+          console.log("imdbID", array[i].imdbID);
+          return {
+            title: array[i].Title,
+            year: array[i].Year,
+            imdbID: array[i].imdbID,
+            poster: "http://img.omdbapi.com/?i=" + array[i].imdbID + "&apikey=8513e0a1"
+          };
+        });
+        $('#searchResultModal').modal('toggle');
 
 
-
-
-
-// requirejs(
-//   ["jquery", "hbs", "bootstrap", "get-books", "xhr1", "q", "filter"],
-//   function($, Handlebars, bootstrap, books, x1, q, filter) {
-//     var allBooks;
-//     books.loadBooks();
-//     .then(function(books){
-//       books = Object.keys( books ).map(key => books[ key ]);
-//       allBooks = books;
-//       return x1.bookType();
-//     })
-//     .then(function(types) {
-//       types = Object.keys( types ).map(key => types[ key ]);
-//       var bookArray = allBooks.map(book => {
-//       book.type = _.find(types, { id:book.booktype }).label;
-//       return book;
-//       });
-//       require(['hbs!../templates/genres'], function(genreTpl) {
-//         $("#bookList").prepend(genreTpl({types: types}));
-//       });
-//       require(['hbs!../templates/books'], function(bookTpl) {
-//       $("#bookList").html(bookTpl({books:bookArray}));
-//         $(document).on('change', "#genres", function(){
-//           filter.byGenre();
-//        });
-
-
-
-
-
-
-
-        //this will save the movie object to our firebase account
-        // $.ajax({
-        //   url: "https://movie-viewer.firebaseio.com/movie.json",
-        //   method: "POST",
-        //   data: JSON.stringify(movie)
-        //   }).done(function(movie) {
-        //     console.log("Your new movie is ", movie);
-        //   });
-
-      //   movies = Object.keys( movies ).map(key => movies[ key ]);
-      //   console.log("this should be an array", movies);
-
-      //   var movies = movies.map(movie => {
-      //     movie.title = _.find(title, {id:movie.title}).label;
-      //   return movie;
-      //   })
+        // var movie = movies.map(movie => {
+        //   movie.Title = _.find(Title, {id:movie.Title}).label;
+        //   console.log("doing the lodash thing", movie);
+        // return movie;
+        // });
       // require(['hbs!../templates/movie'], function(movie) {
       //   $("#movie").html(movie({title : title}));
       // });
 
     });
   });
+
+  $('.img-wrap .close').on('click', function() {
+    var id = $(this).closest('.img-wrap').find('img').data('id');
+    alert('remove picture: ' + id);
+});
 });

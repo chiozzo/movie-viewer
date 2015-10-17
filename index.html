@@ -9,9 +9,12 @@
   <meta charset="UTF-8">
 </head>
   <body>
+
+<!-- ============== NAVBAR ============== -->
+
     <div class="navbar navbar-inverse">
       <span class="navbar-header">
-          <a class="navbar-brand" href="javascript:void(0)">MV</a>
+          <a id="brand" class="navbar-brand" href="javascript:void(0)">MV</a>
       </span>
       <div class="navbar-collapse collapse navbar-inverse-collapse">
         <div class="navbar-form navbar-left">
@@ -27,43 +30,112 @@
         </ul>
       </div>
     </div>
+<!-- ============== /NAVBAR ============== -->
 
+<!-- ============== ALL-WATCHED-UNWATCHED BUTTON GROUP FILTER ============== -->
   <div class="btn-group" role="group" aria-label="...">
     <button id="all" class="btn btn-warning active" role="group" aria-label="...">All</button>
     <button id="unwatched" class="btn btn-warning" role="group" aria-label="...">To Watch</button>
     <button id="watched" class="btn btn-warning" role="group" aria-label="...">Watched</button>
   </div>
-  <div id="listBox"></div>
-  <div id="myModal" class="modal">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h3 class="modal-title">Login</h3>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-                  <div class="col-lg-10">
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                  <div class="col-lg-10">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                  </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button id="sendLogin" type="button" class="btn btn-primary">Login</button>
-              </div>
-          </div>
-      </div>
-  </div>
 
-    <div id="movie">
+<!-- ============== /ALL-WATCHED-UNWATCHED BUTTON GROUP FILTER ============== -->
+
+<!-- ============== LOGIN MODAL ============== -->
+>
+  <div id="myModal" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 class="modal-title">Login</h3>
+        </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+              <div class="col-lg-10">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+              <div class="col-lg-10">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button id="sendLogin" type="button" class="btn btn-primary">Login</button>
+            </div>
+          </div> <!-- close  modal-body -->
+      </div> <!-- close  modal-content -->
+    </div> <!-- close  modal-dialog -->
+  </div> <!-- close  modal -->
+  <!-- ============== /LOGIN MODAL ============== -->
+
+<!-- ============== SEARCH RESULT MODAL ============== -->
+  <div id="searchResultModal" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 class="modal-title">Search Results</h3>
+        </div>
+          <div class="modal-body">
+
+            <div id="searchResult">
+              search results go here
+              <button type="add" id="addMovie">Add movie</button>
+            </div>
+
+            <div class="modal-footer">
+            </div>
+          </div> <!-- close  modal-body -->
+      </div> <!-- close  modal-content -->
+    </div> <!-- close  modal-dialog -->
+  </div> <!-- close  modal -->
+<!-- ============== /SEARCH RESULT MODAL ============== -->
+
+<!-- ============== USER LIBRARY CONTENT ============== -->
+  <section class="row" id="movie">
+
+    <div class="panel panel-default col-md-4 userMovie">
+      <div class="img-wrap">
+        <span class="close">&times;</span>
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Skyfall_poster.jpg" data-id="123" alt="Skyfall poster">
+      </div>
+      <h3>Skyfall</h3>
+      <h5>Rating</h5>
     </div>
 
+    <div class="panel panel-default col-md-4 userMovie">
+      <div class="img-wrap">
+        <span class="close">&times;</span>
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Skyfall_poster.jpg" data-id="123" alt="Skyfall poster">
+      </div>
+      <h3>Skyfall</h3>
+      <h5>Rating</h5>
+    </div>
+
+    <div class="panel panel-default col-md-4 userMovie">
+      <div class="img-wrap">
+        <span class="close">&times;</span>
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Skyfall_poster.jpg" data-id="123" alt="Skyfall poster">
+      </div>
+      <h3>Skyfall</h3>
+      <h5>Rating</h5>
+    </div>
+  </section>
+<!-- ============== /USER LIBRARY CONTENT ============== -->
+
+<!--   <footer class="navbar navbar-inverse">
+      <span class="navbar-header">
+          MV app created by Ali Hamsa, Brian Merchant, and Jonathan Hinton 2015
+      </span>
+      <span class="navbar-header">
+        Movie data provided by <a href="http://http://omdbapi.com/">OMDb</a>
+      </span>
+  </footer> -->
     <script data-main="javascripts/main" src="lib/bower_components/requirejs/require.js"></script>
   </body>
 </html>
