@@ -1,12 +1,14 @@
+{{#each movies}}
   <div id="searchModal" class="modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title">Search Results</h3>
+          <h3 class="modal-title">{{title}} {{year}}</h3>
+          <img src={{poster}} alt="{{title}}" class="img-responsive center-block">
         </div>
           <div class="modal-body">
-            {{#each Search}}
           </div>
       </div>
     </div>
   </div>
+{{/each}}
