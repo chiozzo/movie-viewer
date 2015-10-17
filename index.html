@@ -11,29 +11,36 @@
   <body>
 
     <div class="navbar navbar-inverse">
-          <span class="navbar-header">
-              <a class="navbar-brand" href="javascript:void(0)">MV</a>
-          </span>
+      <span class="navbar-header">
+          <a class="navbar-brand" href="javascript:void(0)">MV</a>
+      </span>
       <div class="navbar-collapse collapse navbar-inverse-collapse">
-          <div class="navbar-form navbar-left">
-            <input id="user_input" type="text" class="form-control col-lg-8" placeholder="Search For Movies">
-            <button id="send" class="btn btn-success btn-raised">Search</button>
-          </div>
-          <div class="navbar-form navbar-left">
-            <input id="find_input" type="text" class="form-control col-lg-8" placeholder="Search Your Library">
-            <button id="find" class="btn btn-success btn-raised">Find</button>
-          </div>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a id="login" href="javascript:void(0)">Login/Register</a></li>
-          </ul>
+        <div class="navbar-form navbar-left">
+          <input id="user_input" type="text" class="form-control col-lg-8" placeholder="Search For Movies">
+          <button id="send" class="btn btn-success btn-raised">Search</button>
         </div>
+        <div class="navbar-form navbar-left">
+          <input id="find_input" type="text" class="form-control col-lg-8" placeholder="Search Your Library">
+          <button id="find" class="btn btn-success btn-raised">Find</button>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a id="login" href="javascript:void(0)">Login</a></li>
+        </ul>
+      </div>
     </div>
+
+  <div class="btn-group" role="group" aria-label="...">
+    <button id="all" class="btn btn-warning" role="group" aria-label="...">All</button>
+    <button id="unwatched" class="btn btn-warning" role="group" aria-label="...">To Watch</button>
+    <button id="watched" class="btn btn-warning" role="group" aria-label="...">Watched</button>
+  </div>
+
   <div id="myModal" class="modal">
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h3 class="modal-title">Login/Register</h3>
+                  <h3 class="modal-title">Login</h3>
               </div>
               <div class="modal-body">
                 <div class="form-group">
