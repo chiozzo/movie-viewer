@@ -21,8 +21,10 @@ requirejs.config({
 
 require(["jquery", "q", "search", "lodash", "bootstrap", "material"], function($, q, search, _, bootstrap, material) {
 
+//Initialize material design for project
   $.material.init();
 
+//this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
   $('#login').on('click', function () {
     console.log("click");
     $('#myModal').modal('toggle');
