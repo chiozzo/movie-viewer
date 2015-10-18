@@ -19,12 +19,16 @@ requirejs.config({
   }
 });
 
-require(["jquery", "search", "q", "lodash", "bootstrap", "material",  "hbs!../templates/movie"], function($, search, q, _, bootstrap, movieHB) {
+require(
+  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "movieTemplates"],
+  function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, templates) {
 
 //Initialize material design for project
 
   $.material.init();
 
+
+  var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
 
 //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
   $('#login').on('click', function () {
@@ -32,38 +36,68 @@ require(["jquery", "search", "q", "lodash", "bootstrap", "material",  "hbs!../te
     $('#myModal').modal('toggle');
   });
 
-//this code will be used to grab the user input for the search bar.  The variable will then be injected/ concatenated into the ajax request url.
 
-  $('#send').click(function(){
-    search.result($('#user_input').val())
-      .then(function(searchResult){
-        console.log("search result", searchResult);
-        var newResult = searchResult.map(function(currentValue, i, array) {
-          console.log("imdbID", array[i].imdbID);
-          return {
-            title: array[i].Title,
-            year: array[i].Year,
-            imdbID: array[i].imdbID,
-            poster: "http://img.omdbapi.com/?i=" + array[i].imdbID + "&apikey=8513e0a1"
-          };
-        });
-        $('#searchResultModal').modal('toggle');
-
-
-        // var movie = movies.map(movie => {
-        //   movie.Title = _.find(Title, {id:movie.Title}).label;
-        //   console.log("doing the lodash thing", movie);
-        // return movie;
-        // });
-      // require(['hbs!../templates/movie'], function(movie) {
-      //   $("#movie").html(movie({title : title}));
-      // });
-
-    });
+  //click event to login user
+  $(document).on('click', "#sendLogin", function() {
+    authenticate.logInUser(firebaseRef);
+    $('#myModal').modal('toggle');
   });
 
+  // var allMoviesArray = [];
+  // var allMoviesObject = {};
+  // var originalMoviesArray = [];
+  // var movieObject;
+
+  $('#send').click(function(){
+    search.result()
+    .then(function(movie) {
+      console.log("'search' array", movie);
+
+  });
+
+  firebaseRef.child("movie").on("value", function(snapshot){
+    var movies = snapshot.val();
+    console.log("movies", movies);
+
+    // allMoviesArray = [];
+
+    // for (var key in movies){
+    //   var movieWithId = movies[key];
+    //   movieWithId.key = key;
+    //   console.log("movieWithId", movieWithId);
+    //   allMoviesArray[allMoviesArray.length] = movieWithId;
+    // }
+
+    // allMoviesObject = {movie : allMoviesArray};
+
+    // originalMoviesArray = allMoviesArray.slice();
+
+    // $("#movie").html(templates.movie(allMoviesObject));
+
+  });
+
+
+
+//this code will be used to grab the user input for the search bar.  The variable will then be injected/ concatenated into the ajax request url.
+  // $('#send').click(function(){
+  //   search.result($('#user_input').val())
+  //     .then(function(searchResult){
+  //       console.log("search result", searchResult);
+
+  //       // var movie = movies.map(movie => {
+  //       //   movie.Title = _.find(Title, {id:movie.Title}).label;
+  //       //   console.log("doing the lodash thing", movie);
+  //       // return movie;
+  //       // });
+  //     // require(['hbs!../templates/movie'], function(movie) {
+  //     //   $("#movie").html(movie({title : title}));
+  //     // });
+
+  //   });
+  // });
   $('.img-wrap .close').on('click', function() {
     var id = $(this).closest('.img-wrap').find('img').data('id');
     alert('remove picture: ' + id);
+  });
 });
 });
