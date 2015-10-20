@@ -20,8 +20,8 @@ requirejs.config({
 });
 
 require(
-  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "hbs!../templates/movieHB"],
-  function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, movieTemplate) {
+  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "movieTemplates", "hbs!../templates/movie"],
+  function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, templates, movieHBS) {
 
 //Initialize material design for project
   $.material.init();
@@ -47,31 +47,47 @@ require(
 
   $('#send').click(function(){
     search.result()
-    .then(function(movieData) {
-      console.log("'search' array", movieData);
-      $("#searchResult").append(movieTemplate({movies: movieData.Search}));
-
+    .then(function(movie) {
+      console.log("movie data", movie);
+      var movieData = movie.map(function(value, i, array){
+        console.log("title", array[i].Title);
+        return {
+          Title : array[i].Title,
+          Year : array[i].Year,
+          Poster : "http://img.omdbapi.com/?i=" + array[i].imdbID + "&apikey=8513e0a1",
+          ImdbID : array[i].imdbID,
+        };
+      });
+      console.log("movieData", movieData);
+      $('#movie').append(movieHBS({movie: movieData}));
     });
   });
+
+  // $('#addMovie').on('click', function(){
+  //   addMovie.addMovie()
+  //   .then(function(myMovie) {
+  //     console.log("myMovie", myMovie);
+  //   }
+  // })
 
   firebaseRef.child("movie").on("value", function(snapshot){
     var movies = snapshot.val();
     console.log("movies", movies);
 
-    // allMoviesArray = [];
+    allMoviesArray = [];
 
-    // for (var key in movies){
-    //   var movieWithId = movies[key];
-    //   movieWithId.key = key;
-    //   console.log("movieWithId", movieWithId);
-    //   allMoviesArray[allMoviesArray.length] = movieWithId;
-    // }
+    for (var key in movies){
+      var movieWithId = movies[key];
+      movieWithId.key = key;
+      console.log("movieWithId", movieWithId);
+      allMoviesArray[allMoviesArray.length] = movieWithId;
+    }
 
-    // allMoviesObject = {movie : allMoviesArray};
+    allMoviesObject = {movie : allMoviesArray};
 
-    // originalMoviesArray = allMoviesArray.slice();
+    originalMoviesArray = allMoviesArray.slice();
 
-    // $("#movie").html(templates.movie(allMoviesObject));
+    $("#movie").html(templates.movie(allMoviesObject));
 
   });
 
@@ -99,4 +115,3 @@ require(
     alert('remove picture: ' + id);
   });
 });
-
