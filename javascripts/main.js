@@ -20,13 +20,11 @@ requirejs.config({
 });
 
 require(
-  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "movieTemplates"],
-  function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, templates) {
+  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "hbs!../templates/movieHB"],
+  function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, movieTemplate) {
 
 //Initialize material design for project
-
   $.material.init();
-
 
   var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
 
@@ -35,7 +33,6 @@ require(
     console.log("click");
     $('#myModal').modal('toggle');
   });
-
 
   //click event to login user
   $(document).on('click', "#sendLogin", function() {
@@ -50,9 +47,11 @@ require(
 
   $('#send').click(function(){
     search.result()
-    .then(function(movie) {
-      console.log("'search' array", movie);
+    .then(function(movieData) {
+      console.log("'search' array", movieData);
+      $("#searchResult").append(movieTemplate({movies: movieData.Search}));
 
+    });
   });
 
   firebaseRef.child("movie").on("value", function(snapshot){
@@ -100,4 +99,4 @@ require(
     alert('remove picture: ' + id);
   });
 });
-});
+

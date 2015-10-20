@@ -1,5 +1,5 @@
 define(["hbs",
-        "hbs!../templates/movie"],
+        "hbs!../templates/movieHB"],
 function(Handlebars, movieTemplate) {
   var templates = {};
   templates.movie = movieTemplate;

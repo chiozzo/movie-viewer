@@ -1,8 +1,8 @@
-
-{{#each movie}}
+{{log "HBS"}}
+{{#each movies}}
   <div class="panel panel-default col-md-4 userMovie">
     <div class="img-wrap">
-      <span id="delete#{{key}}" class="close">&times;</span>
+      <span id="delete#{{@key}}" class="close">&times;</span>
       <img src="{{Poster}}" data-id="123" alt="Skyfall poster">
     </div>
     <h3>{{Title}}</h3>

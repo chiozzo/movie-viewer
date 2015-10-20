@@ -5,13 +5,13 @@
     <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
   <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
   <meta charset="UTF-8">
 </head>
   <body>
-
+<span><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i></span>
 <!-- ============== NAVBAR ============== -->
-
     <div class="navbar navbar-inverse">
       <span class="navbar-header">
           <a id="brand" class="navbar-brand" href="javascript:void(0)">MV</a>
@@ -38,11 +38,9 @@
     <button id="unwatched" class="btn btn-warning" role="group" aria-label="...">To Watch</button>
     <button id="watched" class="btn btn-warning" role="group" aria-label="...">Watched</button>
   </div>
-
 <!-- ============== /ALL-WATCHED-UNWATCHED BUTTON GROUP FILTER ============== -->
 
 <!-- ============== LOGIN MODAL ============== -->
->
   <div id="myModal" class="modal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -72,7 +70,10 @@
     </div> <!-- close  modal-dialog -->
   </div> <!-- close  modal -->
   <!-- ============== /LOGIN MODAL ============== -->
-
+            <div id="searchResult">
+              search results go here
+              <button type="add" id="addMovie">Add movie</button>
+            </div>
 <!-- ============== SEARCH RESULT MODAL ============== -->
   <div id="searchResultModal" class="modal">
     <div class="modal-dialog">
@@ -83,10 +84,10 @@
         </div>
           <div class="modal-body">
 
-            <div id="searchResult">
+            <!-- <div id="searchResult">
               search results go here
               <button type="add" id="addMovie">Add movie</button>
-            </div>
+            </div> -->
 
             <div class="modal-footer">
             </div>
@@ -97,7 +98,7 @@
 <!-- ============== /SEARCH RESULT MODAL ============== -->
 
 <!-- ============== USER LIBRARY CONTENT ============== -->
-  <section class="row" id="movie">
+<!--   <section class="row" id="movie">
 
     <div class="panel panel-default col-md-4 userMovie">
       <div class="img-wrap">
@@ -125,7 +126,7 @@
       <h3>Skyfall</h3>
       <h5>Rating</h5>
     </div>
-  </section>
+  </section> -->
 <!-- ============== /USER LIBRARY CONTENT ============== -->
 
 <!--   <footer class="navbar navbar-inverse">
