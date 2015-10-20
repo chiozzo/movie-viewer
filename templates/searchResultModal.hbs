@@ -1,14 +1,11 @@
-{{#each movies}}
-  <div id="searchModal" class="modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">{{title}} {{year}}</h3>
-          <img src={{poster}} alt="{{title}}" class="img-responsive center-block">
-        </div>
-          <div class="modal-body">
-          </div>
-      </div>
+{{log "HBS"}}
+{{#each movie}}
+  <div class="row" id="theResults">
+{{!--     <img class="col-xs-4" src="{{Poster}}" alt="{{Title}}">
+ --}}    <span class="col-xs-8">{{Title}} ({{Year}})</span>
+    <button type="add" id="addMovie">Add movie</button>
+    <div hidden id="imdbID">
+
     </div>
   </div>
 {{/each}}
