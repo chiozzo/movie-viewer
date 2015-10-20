@@ -91,27 +91,26 @@ require(
 
   });
 
+ $(document).on("click", "span[id^='delete#']", function() {
+      var uniqueIdentifier = this.id.split("#")[1];
+      console.log("unique identifier", uniqueIdentifier);
+      $.ajax({
+        url: "https:movie-viewer.firebaseio.com/movie/" + uniqueIdentifier + ".json",
+        method: "DELETE",
+        contentType: "application/json"
+      }).done(function(){
+        console.log("Successfully deleted movie");
+      });
+
+    });
 
 
-//this code will be used to grab the user input for the search bar.  The variable will then be injected/ concatenated into the ajax request url.
-  // $('#send').click(function(){
-  //   search.result($('#user_input').val())
-  //     .then(function(searchResult){
-  //       console.log("search result", searchResult);
-
-  //       // var movie = movies.map(movie => {
-  //       //   movie.Title = _.find(Title, {id:movie.Title}).label;
-  //       //   console.log("doing the lodash thing", movie);
-  //       // return movie;
-  //       // });
-  //     // require(['hbs!../templates/movie'], function(movie) {
-  //     //   $("#movie").html(movie({title : title}));
-  //     // });
-
-  //   });
-  // });
   $('.img-wrap .close').on('click', function() {
     var id = $(this).closest('.img-wrap').find('img').data('id');
     alert('remove picture: ' + id);
   });
+
+
+
+    
 });
