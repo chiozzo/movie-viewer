@@ -50,12 +50,11 @@ require(
     .then(function(movie) {
       console.log("movie data", movie);
       var movieData = movie.map(function(value, i, array){
-        console.log("title", array[i].Title);
         return {
           Title : array[i].Title,
           Year : array[i].Year,
           Poster : "http://img.omdbapi.com/?i=" + array[i].imdbID + "&apikey=8513e0a1",
-          ImdbID : array[i].imdbID,
+          imdbID : array[i].imdbID
         };
       });
       console.log("movieData", movieData);
@@ -63,12 +62,26 @@ require(
     });
   });
 
-  // $('#addMovie').on('click', function(){
-  //   addMovie.addMovie()
-  //   .then(function(myMovie) {
-  //     console.log("myMovie", myMovie);
-  //   }
-  // })
+  $(document).on("click", "button[id^='imdbID#']", function() {
+      var thisImdbID = this.id.split("#")[1];
+      console.log("thisImdbID", thisImdbID);
+      search.addMovie(thisImdbID)
+      .then(function(myMovie){
+        console.log("myMovie", myMovie);
+       var myNewMovie = myMovie;
+        myNewMovie.Poster = "http://img.omdbapi.com/?i=" + thisImdbID + "&apikey=8513e0a1";
+        myNewMovie.UserRating = 0;
+        myNewMovie.Watched = false;
+        console.log("myNewMovie", myNewMovie);
+        $.ajax({
+          url: "https://movie-viewer.firebaseio.com/movie.json",
+          method: "POST",
+          data: JSON.stringify(myNewMovie)
+          }).done(function(addedMovie) {
+            console.log("Your new song is ", addedMovie);
+          });
+      });
+  });
 
   firebaseRef.child("movie").on("value", function(snapshot){
     var movies = snapshot.val();
@@ -91,6 +104,7 @@ require(
 
   });
 
+
  $(document).on("click", "span[id^='delete#']", function() {
       var uniqueIdentifier = this.id.split("#")[1];
       console.log("unique identifier", uniqueIdentifier);
@@ -104,6 +118,9 @@ require(
 
     });
 
+
+
+//Functionality for delete button
 
   $('.img-wrap .close').on('click', function() {
     var id = $(this).closest('.img-wrap').find('img').data('id');
