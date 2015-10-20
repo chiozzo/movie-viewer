@@ -103,9 +103,24 @@ require(
     $("#movie").html(templates.movie(allMoviesObject));
 
   });
+
 //Functionality for delete button
+ $(document).on("click", "span[id^='delete#']", function() {
+      var uniqueIdentifier = this.id.split("#")[1];
+      console.log("unique identifier", uniqueIdentifier);
+      $.ajax({
+        url: "https:movie-viewer.firebaseio.com/movie/" + uniqueIdentifier + ".json",
+        method: "DELETE",
+        contentType: "application/json"
+      }).done(function(){
+        console.log("Successfully deleted movie");
+      });
+
+    });
+
   $('.img-wrap .close').on('click', function() {
     var id = $(this).closest('.img-wrap').find('img').data('id');
     alert('remove picture: ' + id);
   });
+
 });
