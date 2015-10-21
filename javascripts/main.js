@@ -48,7 +48,7 @@ require(
 
 //functionality for search feature
   $('#send').click(function(){
-    search.result()
+    search.omdb()
     .then(function(movie) {
       console.log("movie data", movie);
       var movieData = movie.map(function(value, i, array){
@@ -64,6 +64,7 @@ require(
     });
   });
 
+//add movie to firebase database
   $(document).on("click", "button[id^='imdbID#']", function() {
       var thisImdbID = this.id.split("#")[1];
       console.log("thisImdbID", thisImdbID);
