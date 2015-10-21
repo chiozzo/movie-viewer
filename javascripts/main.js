@@ -26,6 +26,7 @@ require(
 //Initialize material design for project
   $.material.init();
 
+//Declare variable for firebase reference
   var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
 
 //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
@@ -45,6 +46,7 @@ require(
   // var originalMoviesArray = [];
   // var movieObject;
 
+//functionality for search feature
   $('#send').click(function(){
     search.result()
     .then(function(movie) {
