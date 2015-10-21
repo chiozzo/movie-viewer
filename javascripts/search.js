@@ -1,9 +1,10 @@
 define(function(require) {
   var $ = require("jquery");
   var q = require("q");
+  var firebase = require("firebase");
 
   return {
-    result : function() {
+    omdb : function() {
       //declare var for userInput
       var userInput = $("#user_input").val();
       var deferred = q.defer();
@@ -21,6 +22,10 @@ define(function(require) {
       deferred.reject(error);
     });
     return deferred.promise;
+    },
+    myLib : function(){
+      var searchInput = $("#user_input").val();
+
     },
     addMovie : function(imdbID) {
       //declare var for userInput

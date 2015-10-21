@@ -26,6 +26,7 @@ require(
 //Initialize material design for project
   $.material.init();
 
+//Declare variable for firebase reference
   var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
 
 //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
@@ -45,8 +46,9 @@ require(
   // var originalMoviesArray = [];
   // var movieObject;
 
+//functionality for search feature
   $('#send').click(function(){
-    search.result()
+    search.omdb()
     .then(function(movie) {
       console.log("movie data", movie);
       var movieData = movie.map(function(value, i, array){
@@ -62,13 +64,7 @@ require(
     });
   });
 
-  $(".star-rating").on("click", function(e) {
-    console.log("got a click");
-  });
-
-
-
-
+//add movie to firebase database
   $(document).on("click", "button[id^='imdbID#']", function() {
       var thisImdbID = this.id.split("#")[1];
       console.log("thisImdbID", thisImdbID);
@@ -111,14 +107,23 @@ require(
 
   });
 
-//Function for 5 Star Rating Event
-  // function rate(rating) {
-  //   console.log("Inside the rate function");
-  // }
-
 //Functionality for delete button
+ $(document).on("click", "span[id^='delete#']", function() {
+      var uniqueIdentifier = this.id.split("#")[1];
+      console.log("unique identifier", uniqueIdentifier);
+      $.ajax({
+        url: "https:movie-viewer.firebaseio.com/movie/" + uniqueIdentifier + ".json",
+        method: "DELETE",
+        contentType: "application/json"
+      }).done(function(){
+        console.log("Successfully deleted movie");
+      });
+
+    });
+
   $('.img-wrap .close').on('click', function() {
     var id = $(this).closest('.img-wrap').find('img').data('id');
     alert('remove picture: ' + id);
   });
 });
+
