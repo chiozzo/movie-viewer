@@ -92,7 +92,6 @@ require(
   });
 
 
-
 //this code will be used to grab the user input for the search bar.  The variable will then be injected/ concatenated into the ajax request url.
   // $('#send').click(function(){
   //   search.result($('#user_input').val())
@@ -110,6 +109,16 @@ require(
 
   //   });
   // });
+
+$(':radio').on('click', function(){
+    console.log("Rating= ", rating);
+    // var rating = 1;
+    $('.choice').text( this.value + ' stars' );
+    // rating = this.value;
+
+  });
+
+
   $('.img-wrap .close').on('click', function() {
     var id = $(this).closest('.img-wrap').find('img').data('id');
     alert('remove picture: ' + id);
