@@ -50,12 +50,11 @@ require(
     .then(function(movie) {
       console.log("movie data", movie);
       var movieData = movie.map(function(value, i, array){
-        console.log("title", array[i].Title);
         return {
           Title : array[i].Title,
           Year : array[i].Year,
           Poster : "http://img.omdbapi.com/?i=" + array[i].imdbID + "&apikey=8513e0a1",
-          ImdbID : array[i].imdbID,
+          imdbID : array[i].imdbID
         };
       });
       console.log("movieData", movieData);
@@ -63,12 +62,33 @@ require(
     });
   });
 
-  // $('#addMovie').on('click', function(){
-  //   addMovie.addMovie()
-  //   .then(function(myMovie) {
-  //     console.log("myMovie", myMovie);
-  //   }
-  // })
+  $(".star-rating").on("click", function(e) {
+    console.log("got a click");
+  });
+
+
+
+
+  $(document).on("click", "button[id^='imdbID#']", function() {
+      var thisImdbID = this.id.split("#")[1];
+      console.log("thisImdbID", thisImdbID);
+      search.addMovie(thisImdbID)
+      .then(function(myMovie){
+        console.log("myMovie", myMovie);
+       var myNewMovie = myMovie;
+        myNewMovie.Poster = "http://img.omdbapi.com/?i=" + thisImdbID + "&apikey=8513e0a1";
+        myNewMovie.UserRating = 0;
+        myNewMovie.Watched = false;
+        console.log("myNewMovie", myNewMovie);
+        $.ajax({
+          url: "https://movie-viewer.firebaseio.com/movie.json",
+          method: "POST",
+          data: JSON.stringify(myNewMovie)
+          }).done(function(addedMovie) {
+            console.log("Your new song is ", addedMovie);
+          });
+      });
+  });
 
   firebaseRef.child("movie").on("value", function(snapshot){
     var movies = snapshot.val();
@@ -91,34 +111,12 @@ require(
 
   });
 
+//Function for 5 Star Rating Event
+  // function rate(rating) {
+  //   console.log("Inside the rate function");
+  // }
 
-//this code will be used to grab the user input for the search bar.  The variable will then be injected/ concatenated into the ajax request url.
-  // $('#send').click(function(){
-  //   search.result($('#user_input').val())
-  //     .then(function(searchResult){
-  //       console.log("search result", searchResult);
-
-  //       // var movie = movies.map(movie => {
-  //       //   movie.Title = _.find(Title, {id:movie.Title}).label;
-  //       //   console.log("doing the lodash thing", movie);
-  //       // return movie;
-  //       // });
-  //     // require(['hbs!../templates/movie'], function(movie) {
-  //     //   $("#movie").html(movie({title : title}));
-  //     // });
-
-  //   });
-  // });
-
-$(':radio').on('click', function(){
-    console.log("Rating= ", rating);
-    // var rating = 1;
-    $('.choice').text( this.value + ' stars' );
-    // rating = this.value;
-
-  });
-
-
+//Functionality for delete button
   $('.img-wrap .close').on('click', function() {
     var id = $(this).closest('.img-wrap').find('img').data('id');
     alert('remove picture: ' + id);

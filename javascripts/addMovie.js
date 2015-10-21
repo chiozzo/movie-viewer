@@ -3,12 +3,11 @@ define(function(require) {
   var q = require("q");
 
   return {
-    addMovie : function() {
+    addMovie : function(imdbID) {
       //declare var for userInput
-      var imdbID;
       var deferred = q.defer();
       //ajax call using promises
-      $.ajax({ url : "http://www.omdbapi.com/?i=" + userInput + "&y=&plot=short&r=json" }).done(function(myMovie){
+      $.ajax({ url : "http://www.omdbapi.com/?i=" + imdbID + "&y=&plot=short&r=json" }).done(function(myMovie){
         console.log("myMovie", myMovie);
         //return movie object Search key value
         deferred.resolve(myMovie);
