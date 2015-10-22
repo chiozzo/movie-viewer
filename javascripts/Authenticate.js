@@ -1,5 +1,5 @@
-define(["jquery", "firebase", "getUsers"],
-	function($, firebase, getUsers) {
+define(["jquery", "firebase", "getUsers", "movieTemplates"],
+	function($, firebase, getUsers, templates) {
 return {
 	logInUser: function(firebaseRef) {
 		firebaseRef.authWithPassword({
@@ -10,9 +10,32 @@ return {
         console.log("Login Failed!", error);
       } else{
         console.log("Authenticated successfully with payload:", authData);
-        getUsers.load();
+        getUsers.setUid(authData.uid);
+        getUsers.load(authData.uid);
         $("#inputEmail").val('');
         $("#inputPassword").val('');
+        $("#user_input").show();
+        $("#send").show();
+        firebaseRef.child("users/" + authData.uid + "/movies/").on("value", function(snapshot){
+          var movies = snapshot.val();
+          console.log("movies", movies);
+
+          allMoviesArray = [];
+
+          for (var key in movies){
+            var movieWithId = movies[key];
+            movieWithId.key = key;
+            console.log("movieWithId", movieWithId);
+            allMoviesArray[allMoviesArray.length] = movieWithId;
+          }
+
+          allMoviesObject = {movie : allMoviesArray};
+
+          originalMoviesArray = allMoviesArray.slice();
+
+          $("#movie").html(templates.movie(allMoviesObject));
+
+  });
       }
 	});
 	}

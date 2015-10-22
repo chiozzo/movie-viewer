@@ -25,10 +25,10 @@ require(
 
 //Initialize material design for project
   $.material.init();
-
+  $("#user_input").hide();
+  $("#send").hide();
 //Declare variable for firebase reference
   var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
-
 //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
   $('#login').on('click', function () {
     console.log("click");
@@ -76,8 +76,9 @@ require(
         myNewMovie.UserRating = 0;
         myNewMovie.Watched = false;
         console.log("myNewMovie", myNewMovie);
+        var uid = getUsers.getUid();
         $.ajax({
-          url: "https://movie-viewer.firebaseio.com/movie.json",
+          url: "https://movie-viewer.firebaseio.com/users/" + uid + "/movies.json",
           method: "POST",
           data: JSON.stringify(myNewMovie)
           }).done(function(addedMovie) {
@@ -86,33 +87,12 @@ require(
       });
   });
 
-  firebaseRef.child("movie").on("value", function(snapshot){
-    var movies = snapshot.val();
-    console.log("movies", movies);
-
-    allMoviesArray = [];
-
-    for (var key in movies){
-      var movieWithId = movies[key];
-      movieWithId.key = key;
-      console.log("movieWithId", movieWithId);
-      allMoviesArray[allMoviesArray.length] = movieWithId;
-    }
-
-    allMoviesObject = {movie : allMoviesArray};
-
-    originalMoviesArray = allMoviesArray.slice();
-
-    $("#movie").html(templates.movie(allMoviesObject));
-
-  });
-
 //Functionality for delete button
  $(document).on("click", "span[id^='delete#']", function() {
       var uniqueIdentifier = this.id.split("#")[1];
       console.log("unique identifier", uniqueIdentifier);
       $.ajax({
-        url: "https:movie-viewer.firebaseio.com/movie/" + uniqueIdentifier + ".json",
+        url: "https:movie-viewer.firebaseio.com/users/" + uid + "/movies/" + uniqueIdentifier + ".json",
         method: "DELETE",
         contentType: "application/json"
       }).done(function(){
