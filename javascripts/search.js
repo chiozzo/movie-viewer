@@ -4,6 +4,7 @@ define(function(require) {
   var firebase = require("firebase");
 
   return {
+    //omdb search functionality
     omdb : function() {
       //declare var for userInput
       var userInput = $("#user_input").val();
@@ -23,10 +24,12 @@ define(function(require) {
     });
     return deferred.promise;
     },
+    //search user library WIP
     myLib : function(){
       var searchInput = $("#user_input").val();
 
     },
+    //add movie to specific users library
     addMovie : function(imdbID) {
       //declare var for userInput
       var deferred = q.defer();

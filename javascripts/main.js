@@ -25,10 +25,14 @@ require(
 
 //Initialize material design for project
   $.material.init();
+
+//Hide search and submit inputs until user is logged in
   $("#user_input").hide();
   $("#send").hide();
+
 //Declare variable for firebase reference
   var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
+
 //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
   $('#login').on('click', function () {
     console.log("click");
@@ -91,6 +95,7 @@ require(
  $(document).on("click", "span[id^='delete#']", function() {
       var uniqueIdentifier = this.id.split("#")[1];
       console.log("unique identifier", uniqueIdentifier);
+      var uid = getUsers.getUid();
       $.ajax({
         url: "https:movie-viewer.firebaseio.com/users/" + uid + "/movies/" + uniqueIdentifier + ".json",
         method: "DELETE",
@@ -99,11 +104,5 @@ require(
         console.log("Successfully deleted movie");
       });
 
-    });
-
-  $('.img-wrap .close').on('click', function() {
-    var id = $(this).closest('.img-wrap').find('img').data('id');
-    alert('remove picture: ' + id);
   });
-
 });

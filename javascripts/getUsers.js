@@ -6,9 +6,11 @@ define(["jquery","lodash"], function($, _) {
       	console.log("user JSON", users);
       });
     },
+    //set uid in authenticate.js
     setUid : function(passMe){
       uid = passMe;
     },
+    //get uid for future use
     getUid : function(){
       return uid;
     }

@@ -1,6 +1,7 @@
 define(["jquery", "firebase", "getUsers", "movieTemplates"],
 	function($, firebase, getUsers, templates) {
 return {
+  //this logs user into firebase based on email and password
 	logInUser: function(firebaseRef) {
 		firebaseRef.authWithPassword({
       'email': $("#inputEmail").val(),
@@ -14,8 +15,10 @@ return {
         getUsers.load(authData.uid);
         $("#inputEmail").val('');
         $("#inputPassword").val('');
+        //show user input on successful load to interact with app
         $("#user_input").show();
         $("#send").show();
+        //show firebase snapshot on load based on authData Uid
         firebaseRef.child("users/" + authData.uid + "/movies/").on("value", function(snapshot){
           var movies = snapshot.val();
           console.log("movies", movies);
@@ -35,9 +38,9 @@ return {
 
           $("#movie").html(templates.movie(allMoviesObject));
 
-  });
+        });
       }
-	});
-	}
-};
+	   });
+	 }
+  };
 });
