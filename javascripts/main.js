@@ -31,7 +31,7 @@ require(
   $("#send").hide();
 
 //Declare variable for firebase reference
-  var firebaseRef = new Firebase("https://movie-viewer.firebaseio.com/");
+  var firebaseRef = new Firebase("https://movie-viewe.firebaseio.com/");
 
 //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
   $('#login').on('click', function () {

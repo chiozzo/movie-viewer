@@ -5,7 +5,7 @@ define(function(require) {
     //this will save the movie object to our firebase account
     saveMovie : function() {
       $.ajax({
-      url: "https://movie-viewer.firebaseio.com/movie.json",
+      url: "https://movie-viewe.firebaseio.com/movie.json",
       method: "POST",
       data: JSON.stringify(movie)
       }).done(function(movie) {

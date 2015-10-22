@@ -6,7 +6,7 @@ define(function(require) {
     getMovies : function(){
       var deferred = q.defer();
           $.ajax({
-          url:"https://movie-viewer.firebaseio.com/movie.json"
+          url:"https://movie-viewe.firebaseio.com/movie.json"
           }).done(function(firebaseData){
             console.log("firebase data : ", firebaseData);
             deferred.resolve(firebaseData);
