@@ -24,7 +24,8 @@ require(
   function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, templates, movieHBS) {
 
 //Initialize material design for project
-  $.material.init();
+  // $.material.init();
+
 
 //Hide search and submit inputs until user is logged in
   $("#user_input").hide();
@@ -32,6 +33,8 @@ require(
 
 //Declare variable for firebase reference
   var firebaseRef = new Firebase("https://movie-viewe.firebaseio.com/");
+
+authenticate.logInUser(firebaseRef);
 
 //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
   $('#login').on('click', function () {
@@ -82,7 +85,7 @@ require(
         console.log("myNewMovie", myNewMovie);
         var uid = getUsers.getUid();
         $.ajax({
-          url: "https://movie-viewer.firebaseio.com/users/" + uid + "/movies.json",
+          url: "https://movie-viewe.firebaseio.com/users/" + uid + "/movies.json",
           method: "POST",
           data: JSON.stringify(myNewMovie)
           }).done(function(addedMovie) {

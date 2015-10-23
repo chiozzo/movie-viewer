@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Viewer</title>
+  <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link href="./lib/bower_components/bootstrap-star-rating/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row row0">
+    <div class="col-xs-12">
+      <div class="navbar navbar-default">
+          <div class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="row row1">
+    <div class="col-lg-3 col-sm-offset-1">
+      <div class="btn-group" role="group">
+        <button id="watched" class="btn btn-warning" role="group">Watched</button>
+        <button id="unwatched" class="btn btn-warning" role="group">Not Watch</button>
+        <button id="fiveStars" class="btn btn-warning" role="group">5 Stars</button>
+      </div>
+    </div>
+  </div>
+  <div id="displayMovies" class="row row2">
+    <div class="col-md-3">
+      <div class="well well-sm singleMovie">
+        <div class="row row2-1">
+          <h3 class="col-md-12">Avengers: Age of Ultron</h3>
+        </div>
+        <div class="row row2-2">
+          <div class="imgWrap col-xs-4 col-xs-offset-4">
+            <button type="button" class="close" aria-label="Close">&times;</button>
+            <img src="http://img.omdbapi.com/?i=tt2395427&apikey=8513e0a1" alt="Avengers Age of Ultron poster" class="img-responsive">
+          </div>
+          <div class="col-xs-4 emptySpace"></div>
+        </div>
+        <div class="row row2-3">
+          <div class="buttonWrap col-md-12">
+            <button class="btn btn-success">Add Movie</button>
+            <button class="watchedButton btn btn-danger">Watched</button>
+          </div>
+        </div>
+        <div class="row row2-4">
+          <div class="starWrap col-md-12">
+            <input type="number" class="starRating" data-stars=10 value=8>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="well well-sm singleMovie">
+        <div class="row row2-1">
+          <div class="col-md-12">MOVIE TITLE</div>
+        </div>
+        <div class="row row2-2">
+          <div class="col-md-4 emptySpace"></div>
+          <div class="imgWrap col-md-4">IMAGE WRAPPER</div>
+          <div class="col-md-4 emptySpace"></div>
+        </div>
+        <div class="row row2-3">
+          <div class="buttonWrap col-md-6">BUTTON WRAPPER</div>
+          <div class="starRating col-md-6">STAR RATING</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="well well-sm singleMovie">
+        <div class="row row2-1">
+          <div class="col-md-12">MOVIE TITLE</div>
+        </div>
+        <div class="row row2-2">
+          <div class="col-md-4 emptySpace"></div>
+          <div class="imgWrap col-md-4">IMAGE WRAPPER</div>
+          <div class="col-md-4 emptySpace"></div>
+        </div>
+        <div class="row row2-3">
+          <div class="buttonWrap col-md-6">BUTTON WRAPPER</div>
+          <div class="starRating col-md-6">STAR RATING</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="well well-sm singleMovie">
+        <div class="row row2-1">
+          <div class="col-md-12">MOVIE TITLE</div>
+        </div>
+        <div class="row row2-2">
+          <div class="col-md-4 emptySpace"></div>
+          <div class="imgWrap col-md-4">IMAGE WRAPPER</div>
+          <div class="col-md-4 emptySpace"></div>
+        </div>
+        <div class="row row2-3">
+          <div class="buttonWrap col-md-6">BUTTON WRAPPER</div>
+          <div class="starRating col-md-6">STAR RATING</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script data-main="javascripts/mainTest" src="lib/bower_components/requirejs/require.js"></script>
+</body>
+</html>

@@ -4,8 +4,8 @@ return {
   //this logs user into firebase based on email and password
 	logInUser: function(firebaseRef) {
 		firebaseRef.authWithPassword({
-      'email': $("#inputEmail").val(),
-      'password': $("#inputPassword").val()
+      'email': "mncross@gmail.com",
+      'password': "abc"
     }, function(error, authData) {
       if (error) {
         console.log("Login Failed!", error);
