@@ -45,6 +45,12 @@ require(
     $('#myModal').modal('toggle');
   });
 
+
+  // adding click event to register
+  $('#register').click(function(){
+    authenticate.getRegister();
+  });
+
   // var allMoviesArray = [];
   // var allMoviesObject = {};
   // var originalMoviesArray = [];
