@@ -3,37 +3,53 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
 
     var firebaseRef = new firebase("https://movie-viewe.firebaseio.com");
 
-return {
-  //this logs user into firebase based on email and password
-	logInUser: function(firebaseRef) {
-		firebaseRef.authWithPassword({
-      'email': "mncross@gmail.com",
-      'password': "abc"
-    }, function(error, authData) {
-      if (error) {
-        console.log("Login Failed!", error);
-      } else{
-        console.log("Authenticated successfully with payload:", authData);
-        getUsers.setUid(authData.uid);
-        getUsers.load(authData.uid);
-        $("#inputEmail").val('');
-        $("#inputPassword").val('');
-        //show user input on successful load to interact with app
-        $("#user_input").show();
-        $("#send").show();
-        //show firebase snapshot on load based on authData Uid
-        firebaseRef.child("users/" + authData.uid + "/movies/").on("value", function(snapshot){
-          var movies = snapshot.val();
-          console.log("movies", movies);
+    return {
+      //this logs user into firebase based on email and password
+    	logInUser: function(email, password) {
+    		firebaseRef.authWithPassword({
+          email: $("#inputEmail").val(),
+          password: $("#inputPassword").val()
 
-          allMoviesArray = [];
+          // 'email': "mncross@gmail.com",
+          // 'password': "abc"
 
-          for (var key in movies){
-            var movieWithId = movies[key];
-            movieWithId.key = key;
-            console.log("movieWithId", movieWithId);
-            allMoviesArray[allMoviesArray.length] = movieWithId;
-// >>>>>>> master
+        }, function(error, authData) {
+          if (error) {
+            console.log("Login Failed!", error);
+          } else{
+            console.log("login successful");
+
+    // =========above is working
+
+            console.log("Authenticated successfully with payload:", authData);
+            getUsers.setUid(authData.uid);
+            getUsers.load(authData.uid);
+            $("#inputEmail").val('');
+            $("#inputPassword").val('');
+            //show user input on successful load to interact with app
+            
+            $("#user_input").show();
+            $("#send").show();
+            //show firebase snapshot on load based on authData Uid
+            firebaseRef.child("users/" + authData.uid + "/movies/").on("value", function(snapshot){
+              var movies = snapshot.val();
+              console.log("movies", movies);
+              allMoviesArray = [];
+              
+              for (var key in movies){
+                var movieWithId = movies[key];
+                movieWithId.key = key;
+                console.log("movieWithId", movieWithId);
+                allMoviesArray[allMoviesArray.length] = movieWithId;
+              }
+
+              allMoviesObject = {movie : allMoviesArray};
+
+              originalMoviesArray = allMoviesArray.slice();
+
+              $("#movie").html(templates.movie(allMoviesObject));
+            });
+
           }
         })
       },
