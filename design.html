@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="container-fluid">
+<!-- ==== NAVBAR ==== -->
   <div class="row row0">
     <div class="col-xs-12">
       <div class="navbar navbar-default">
@@ -18,19 +19,27 @@
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </div>
+          <div class="navbar-right">
+          </div>
       </div>
     </div>
   </div>
-  <div class="row row1">
-    <div class="col-lg-3 col-sm-offset-1">
-      <div class="btn-group" role="group">
-        <button id="watched" class="btn btn-warning" role="group">Watched</button>
-        <button id="unwatched" class="btn btn-warning" role="group">Not Watch</button>
-        <button id="fiveStars" class="btn btn-warning" role="group">5 Stars</button>
-      </div>
+<!-- ==== /NAVBAR ==== -->
+
+<!-- ==== BUTTON GROUP FILTERS ==== -->
+<div class="row row1">
+  <div class="col-lg-3 col-sm-offset-1">
+    <div class="btn-group" role="group">
+      <button id="watched" class="btn btn-warning" role="group">Watched</button>
+      <button id="unwatched" class="btn btn-warning" role="group">Not Watch</button>
+      <button id="fiveStars" class="btn btn-warning" role="group">5 Stars</button>
     </div>
   </div>
+</div>
+<!-- ==== /BUTTON GROUP FILTERS ==== -->
+
   <div id="displayMovies" class="row row2">
+<!-- ==== USER LIBRARY CONTENT ==== -->
     <div class="col-md-3">
       <div class="well well-sm singleMovie">
         <div class="row row2-1">
@@ -56,6 +65,9 @@
         </div>
       </div>
     </div>
+<!-- ==== USER LIBRARY CONTENT ==== -->
+
+
     <div class="col-md-3">
       <div class="well well-sm singleMovie">
         <div class="row row2-1">
