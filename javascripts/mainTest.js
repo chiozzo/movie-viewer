@@ -6,8 +6,7 @@ requirejs.config({
     "bootstrap": "../lib/bower_components/bootstrap/dist/js/bootstrap.min",
     "firebase" : "../lib/bower_components/firebase/firebase",
     "lodash" : "../lib/bower_components/lodash/lodash.min",
-    "material": "../lib/bower_components/bootstrap-material-design/dist/js/material.min",
-    "noUiSlider": "../lib/noUiSlider.8.0.2/nouislider.min",
+    "nouislider": "../lib/bower_components/nouislider/distribute/nouislider",
     "q": "../lib/bower_components/q/q",
     "bootstrap-star-rating": "../lib/bower_components/bootstrap-star-rating/js/star-rating",
     "scotch-panels": "../lib/bower_components/scotch-panels/dist/scotchPanels.min"
@@ -16,15 +15,24 @@ requirejs.config({
     "bootstrap": ["jquery"],
     "scotch-panels": ["jquery"],
     "bootstrap-star-rating": ["bootstrap"],
-    "material": ["bootstrap"],
-    "noUiSlider": ["jquery"],
+    "nouislider": ["jquery"],
     "firebase": {exports: "Firebase"}
   }
 });
 
 require(
-  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "scotch-panels", "bootstrap-star-rating", "material", "firebase", "hbs", "Authenticate", "movieTemplates", "hbs!../templates/movie"],
-  function($, q, search, getUsers, _, bootstrap, scotchPanels, bootstrapStarRating, material, firebase, handlebars, authenticate, templates, movieHBS) {
+  ["jquery", "q", "lodash","bootstrap", "scotch-panels", "bootstrap-star-rating", "nouislider"],
+  function($, q, _, bootstrap, scotchPanels, bootstrapStarRating, noUiSlider) {
+
+  noUiSlider.create(document.getElementById('sliderInput'), {
+    start: 0,
+    connect: 'lower',
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 10
+    }
+  });
 
   $(".starRating").rating({
     min:0,

@@ -5,6 +5,7 @@
   <title>Movie Viewer</title>
   <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link href="./lib/bower_components/bootstrap-star-rating/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css">
+  <link href="./lib/bower_components/nouislider/distribute/nouislider.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
@@ -32,7 +33,11 @@
     <div class="btn-group" role="group">
       <button id="watched" class="btn btn-warning" role="group">Watched</button>
       <button id="unwatched" class="btn btn-warning" role="group">Not Watch</button>
-      <button id="fiveStars" class="btn btn-warning" role="group">5 Stars</button>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="sliderWrap">
+      <div class="noUi-target" id="sliderInput"></div>
     </div>
   </div>
 </div>

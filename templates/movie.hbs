@@ -21,15 +21,17 @@
     <div class="btn-group" role="group">
       <button id="watched" class="btn btn-warning" role="group">Watched</button>
       <button id="unwatched" class="btn btn-warning" role="group">Not Watch</button>
-      <button id="fiveStars" class="btn btn-warning" role="group">5 Stars</button>
     </div>
+  </div>
+  <div class="col-lg-4">
+      <div class="noUi-target" id="sliderInput"></div>
   </div>
 </div>
 <!-- ==== /BUTTON GROUP FILTERS ==== -->
 
 <!-- ==== USER LIBRARY CONTENT ==== -->
 <div id="displayMovies" class="row row2">
-  {{#each movie}}
+  {{#each movies}}
   <div class="col-md-3">
     <div class="well well-sm singleMovie">
       <div class="row row2-1">
@@ -50,7 +52,7 @@
       </div>
       <div class="row row2-4">
         <div class="starWrap col-md-12">
-          <input type="number" class="starRating" data-stars=10 value=8>
+          <input type="number" class="starRating" data-stars=10 value={{rating}}>
         </div>
       </div>
     </div>
@@ -58,25 +60,3 @@
   {{/each}}
 </div>
 <!-- ==== USER LIBRARY CONTENT ==== -->
-
-<div class="col-md-3">
-  <div class="well well-sm singleMovie">
-    <div class="row row2-1">
-      <h3 class="col-md-12">{{Title}}</h3>
-    </div>
-    <div class="row row2-2">
-      <div class="imgWrap col-xs-4 col-xs-offset-4">
-        <span class="close mdi-action-highlight-remove"></span>
-        <img src={{Poster}} alt="{{Title}} poster" class="img-responsive">
-      </div>
-      <div class="col-xs-4 emptySpace"></div>
-    </div>
-    <div class="row row2-3">
-      <div class="buttonWrap col-md-6">
-        <button class="btn btn-success">Add Movie</button>
-        <button class="watchedButton btn btn-danger">Watched</button>
-      </div>
-      <div class="starRating col-md-6">STAR RATING</div>
-    </div>
-  </div>
-</div>

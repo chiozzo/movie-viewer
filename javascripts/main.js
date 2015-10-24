@@ -6,106 +6,90 @@ requirejs.config({
     "bootstrap": "../lib/bower_components/bootstrap/dist/js/bootstrap.min",
     "firebase" : "../lib/bower_components/firebase/firebase",
     "lodash" : "../lib/bower_components/lodash/lodash.min",
-    "material": "../lib/bower_components/bootstrap-material-design/dist/js/material.min",
-    "noUiSlider": "../lib/noUiSlider.8.0.2/nouislider.min",
-    "q" : "../lib/bower_components/q/q"
+    "nouislider": "../lib/bower_components/nouislider/distribute/nouislider",
+    "q": "../lib/bower_components/q/q",
+    "bootstrap-star-rating": "../lib/bower_components/bootstrap-star-rating/js/star-rating",
+    "scotch-panels": "../lib/bower_components/scotch-panels/dist/scotchPanels.min"
   },
   shim: {
     "bootstrap": ["jquery"],
-    "material": ["bootstrap"],
-    "noUiSlider": ["jquery"],
-    "firebase" : {exports: "Firebase"
-    }
+    "scotch-panels": ["jquery"],
+    "bootstrap-star-rating": ["bootstrap"],
+    "nouislider": ["jquery"],
+    "firebase": {exports: "Firebase"}
   }
 });
 
 require(
-  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "movieTemplates", "hbs!../templates/movie"],
-  function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, templates, movieHBS) {
+  ["jquery", "q", "lodash","bootstrap", "scotch-panels", "bootstrap-star-rating", "nouislider"],
+  function($, q, _, bootstrap, scotchPanels, bootstrapStarRating, noUiSlider) {
 
-//Initialize material design for project
-  // $.material.init();
-
-
-//Hide search and submit inputs until user is logged in
-  $("#user_input").hide();
-  $("#send").hide();
-
-//Declare variable for firebase reference
-  var firebaseRef = new Firebase("https://movie-viewe.firebaseio.com/");
-
-authenticate.logInUser(firebaseRef);
-
-//this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
-  $('#login').on('click', function () {
-    console.log("click");
-    $('#myModal').modal('toggle');
+  $(".starRating").rating({
+    min:0,
+    max:10,
+    step:1,
+    size:'xs',
+    showClear:true,
+    starCaptions: {
+      1: 'One Star',
+      2: 'Two Stars',
+      3: 'Three Stars',
+      4: 'Four Stars',
+      5: 'Five Stars',
+    },
+    starCaptionClasses: function(val) {
+      if (val === 0) {
+        return 'label label-default';
+      } else if (val < 2) {
+        return 'label label-danger';
+      } else if (val < 3) {
+        return 'label label-warning';
+      } else if (val < 4) {
+        return 'label label-info';
+      } else if (val < 5) {
+        return 'label label-primary';
+      } else {
+        return 'label label-success';
+      }
+    }
+    // {
+    //  1: 'label label-danger',
+    //  2: 'label label-danger',
+    //  3: 'label label-warning',
+    //  4: 'label label-warning',
+    //  5: 'label label-info',
+    //  6: 'label label-info',
+    //  7: 'label label-primary',
+    //  8: 'label label-primary',
+    //  9: 'label label-success',
+    //  10: 'label label-success'
+    // }
   });
 
-  //click event to login user
-  $(document).on('click', "#sendLogin", function() {
-    authenticate.logInUser(firebaseRef);
-    $('#myModal').modal('toggle');
+  var panelExample = $('#registerForm').scotchPanel({
+      containerSelector: '#panelContainer', // Make this appear on the entire screen
+      direction: 'left', // Make it toggle in from the left
+      duration: 300, // Speed in ms how fast you want it to be
+      transition: 'ease', // CSS3 transition type: linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier(P1x,P1y,P2x,P2y)
+      distanceX: '100%', // Size of the toggle
+      enableEscapeKey: true // Clicking Esc will close the panel
   });
 
-  // var allMoviesArray = [];
-  // var allMoviesObject = {};
-  // var originalMoviesArray = [];
-  // var movieObject;
-
-//functionality for search feature
-  $('#send').click(function(){
-    search.omdb()
-    .then(function(movie) {
-      console.log("movie data", movie);
-      var movieData = movie.map(function(value, i, array){
-        return {
-          Title : array[i].Title,
-          Year : array[i].Year,
-          Poster : "http://img.omdbapi.com/?i=" + array[i].imdbID + "&apikey=8513e0a1",
-          imdbID : array[i].imdbID
-        };
-      });
-      console.log("movieData", movieData);
-      $('#movie').append(movieHBS({movie: movieData}));
-    });
+  $(document).on('click', '#registerFormButton', function() {
+    panelExample.open();
   });
 
-//add movie to firebase database
-  $(document).on("click", "button[id^='imdbID#']", function() {
-      var thisImdbID = this.id.split("#")[1];
-      console.log("thisImdbID", thisImdbID);
-      search.addMovie(thisImdbID)
-      .then(function(myMovie){
-        console.log("myMovie", myMovie);
-       var myNewMovie = myMovie;
-        myNewMovie.Poster = "http://img.omdbapi.com/?i=" + thisImdbID + "&apikey=8513e0a1";
-        myNewMovie.UserRating = 0;
-        myNewMovie.Watched = false;
-        console.log("myNewMovie", myNewMovie);
-        var uid = getUsers.getUid();
-        $.ajax({
-          url: "https://movie-viewe.firebaseio.com/users/" + uid + "/movies.json",
-          method: "POST",
-          data: JSON.stringify(myNewMovie)
-          }).done(function(addedMovie) {
-            console.log("Your new song is ", addedMovie);
-          });
-      });
+  $(document).on('click', '#registerUserButton', function() {
+    panelExample.close();
   });
 
-//Functionality for delete button
- $(document).on("click", "span[id^='delete#']", function() {
-      var uniqueIdentifier = this.id.split("#")[1];
-      console.log("unique identifier", uniqueIdentifier);
-      var uid = getUsers.getUid();
-      $.ajax({
-        url: "https:movie-viewer.firebaseio.com/users/" + uid + "/movies/" + uniqueIdentifier + ".json",
-        method: "DELETE",
-        contentType: "application/json"
-      }).done(function(){
-        console.log("Successfully deleted movie");
-      });
-
+  noUiSlider.create(document.getElementById('sliderInput'), {
+    start: 0,
+    connect: 'lower',
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 10
+    }
   });
 });
