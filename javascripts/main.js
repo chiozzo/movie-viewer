@@ -7,6 +7,7 @@ requirejs.config({
     "firebase" : "../lib/bower_components/firebase/firebase",
     "lodash" : "../lib/bower_components/lodash/lodash.min",
     "material": "../lib/bower_components/bootstrap-material-design/dist/js/material.min",
+    'bootstrapStarRating': '../lib/bower_components/bootstrap-star-rating/js/star-rating.min',
     "noUiSlider": "../lib/noUiSlider.8.0.2/nouislider.min",
     "q" : "../lib/bower_components/q/q"
   },
@@ -14,14 +15,15 @@ requirejs.config({
     "bootstrap": ["jquery"],
     "material": ["bootstrap"],
     "noUiSlider": ["jquery"],
+    'bootstrapStarRating': ['bootstrap'],
     "firebase" : {exports: "Firebase"
     }
   }
 });
 
 require(
-  ["jquery",  "q", "search", "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "movieTemplates", "hbs!../templates/movie"],
-  function($, q, search, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, templates, movieHBS) {
+  ["jquery",  "q", "search", "sort" "getUsers", "lodash", "bootstrap", "material", "firebase", "hbs", "Authenticate", "movieTemplates", "hbs!../templates/movie"],
+  function($, q, search, sort, getUsers, _, bootstrap, material, firebase, handlebars, authenticate, templates, movieHBS) {
 
 //Initialize material design for project
   // $.material.init();
@@ -92,6 +94,17 @@ authenticate.logInUser(firebaseRef);
             console.log("Your new song is ", addedMovie);
           });
       });
+  });
+
+  //watched filter functionality
+
+  $(document).on("click", "#Watched", function(){
+    sort.getUsersMovies()
+     .then(function(allMovies) {
+        var filterWatchedMovies = sort.setFilterWatched(allMovies);
+        sort.loadProfileHbs(filterWatchedMovies);
+    });
+    console.log("watched filter has been clicked");
   });
 
 //Functionality for delete button

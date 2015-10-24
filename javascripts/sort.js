@@ -4,5 +4,8 @@ define(function(require) {
   var firebase = require("firebase");
   var _ = require("lodash");
 
+ test: function (){
+ 	alert('mohamed');
+ }
 
 });
