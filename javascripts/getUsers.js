@@ -2,7 +2,7 @@ define(["jquery","lodash"], function($, _) {
   var uid;
   return {
     load: function(uid) {
-      $.ajax("https://movie-viewer.firebaseio.com/users/" + uid + "/.json").done(function(users) {
+      $.ajax("https://movie-viewe.firebaseio.com/users/" + uid + "/.json").done(function(users) {
       	console.log("user JSON", users);
       });
     },
