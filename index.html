@@ -1,46 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Movie Viewer</title>
-    <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap-material-design/dist/css/material-fullpalette.css">
-  <link rel="stylesheet" href="styles/main.css">
   <meta charset="UTF-8">
+  <title>Movie Viewer</title>
+  <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link href="./lib/bower_components/bootstrap-star-rating/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css">
+  <link href="./lib/bower_components/nouislider/distribute/nouislider.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
 </head>
-  <body>
-<!-- ============== NAVBAR ============== -->
-    <div class="navbar navbar-inverse">
-      <span class="navbar-header">
-          <a id="brand" class="navbar-brand" href="javascript:void(0)">MV</a>
-      </span>
-      <div class="navbar-collapse collapse navbar-inverse-collapse">
-        <div class="navbar-form navbar-left">
-          <input id="user_input" type="text" class="form-control col-lg-8" placeholder="Search For Movies">
-          <button id="send" class="btn btn-success btn-raised">Search</button>
+<body>
+<div class="container-fluid">
+<div id="loginRegister">
+  <div class="jumbotron" id="panelContainer">
+    <div class="registerForm" id="registerForm">
+      <h2>Please register to start adding movies</h2>
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label for="registerEmailInput" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="registerEmailInput" placeholder="Email">
+          </div>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a id="login" href="javascript:void(0)">Login</a></li>
-        </ul>
+        <div class="form-group">
+          <label for="registerPasswordInput" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="registerPasswordInput" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="registerUserButton">Register</button>
+          </div>
+        </div>
       </div>
     </div>
-<!-- ============== /NAVBAR ============== -->
-
-<!-- ============== ALL-WATCHED-UNWATCHED BUTTON GROUP FILTER ============== -->
-  <div class="btn-group" role="group" aria-label="...">
-    <button id="watched" class="btn btn-warning" role="group" aria-label="...">Watched</button>
-    <button id="unwatched" class="btn btn-warning" role="group" aria-label="...">To Watch</button>
-    <button id="fiveStars" class="btn btn-warning active" role="group" aria-label="...">5 Stars</button>
-  </div>
-<!-- ============== /ALL-WATCHED-UNWATCHED BUTTON GROUP FILTER ============== -->
-
-<!-- ============== LOGIN MODAL ============== -->
-  <div id="myModal" class="modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h3 class="modal-title">Login</h3>
+    <div class="loginForm" id="loginForm">
+      <h2>Please sign in to view your movies</h2>
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label for="loginEmailInput" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="loginEmailInput" placeholder="Email">
+          </div>
         </div>
+        <div class="form-group">
+          <label for="loginPasswordInput" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="loginPasswordInput" placeholder="Password">
+          </div>
+        </div>
+<<<<<<< HEAD
           <div class="modal-body">
             <div class="form-group">
               <label for="inputEmail" class="col-lg-2 control-label">Email</label>
@@ -73,37 +82,20 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h3 class="modal-title">Search Results</h3>
+=======
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+          </div>
+>>>>>>> b85cd2728312a98fe10019e43a34a3ce8bb21dfd
         </div>
-          <div class="modal-body">
-
-            <div id="searchResult">
-              search results go here
-              <button type="add" id="addMovie">Add movie</button>
-            </div>
-
-            <div class="modal-footer">
-            </div>
-          </div> <!-- close  modal-body -->
-      </div> <!-- close  modal-content -->
-    </div> <!-- close  modal-dialog -->
-  </div> <!-- close  modal -->
-<!-- ============== /SEARCH RESULT MODAL ============== -->
-
-<!-- ============== USER LIBRARY CONTENT ============== -->
-  <section class="row">
-    <div id="movie">
+      </div>
+      <p>You've never been here before? <button class="btn btn-primary btn-xs" role="button" id="registerFormButton">Register here</button></p>
     </div>
-  </section>
-<!-- ============== /USER LIBRARY CONTENT ============== -->
-
-<!--   <footer class="navbar navbar-inverse">
-      <span class="navbar-header">
-          MV app created by Ali Hamsa, Brian Merchant, and Jonathan Hinton 2015
-      </span>
-      <span class="navbar-header">
-        Movie data provided by <a href="http://http://osmbapi.com/">Osmb</a>
-      </span>
-  </footer> -->
-    <script data-main="javascripts/main" src="lib/bower_components/requirejs/require.js"></script>
-  </body>
+  </div>
+</div>
+<div id="myMovies"></div>
+</div>
+<script data-main="javascripts/main" src="lib/bower_components/requirejs/require.js"></script>
+</body>
 </html>
