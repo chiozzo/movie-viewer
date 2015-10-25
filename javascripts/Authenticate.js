@@ -48,8 +48,8 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
               allMoviesObject = {movie : allMoviesArray};
 
               originalMoviesArray = allMoviesArray.slice();
+              $("#myMovies").append(templates.loadProfileHbs(originalMoviesArray));
 
-              $("#myMovies").html(templates.movie(allMoviesObject));
             });
 
           }

@@ -43,19 +43,22 @@ require(
     //click event to login user
     $(document).on('click', "#login", function() {
       authenticate.logInUser()
-      // .then(function(getMovies) {
-        dataControl.getMovies()
-        .then(function(movieData) {
-        $('#myMovies').append('toggle');
-        $("#loginRegister").remove();
+
+      // .then(function(movies) {
+      //   dataControl.getMovies(movies)
+        // .then(function(movieData) {
+        // $('#myMovies').append('toggle');
+        $("#loginRegister").toggle();
         console.log("geeeezzzz");
-        // movieTemplates.templates(movieData)
-      $('#myMovies').append(templates);
-        
-        console.log(movieData);
+
+        // $('#myMovies').append(movieHBS);
+
+        // console.log(movieData);
       // });
-      });
+      // });
     });
+
+
 
 
 
@@ -70,16 +73,17 @@ require(
   // var movieObject;
 
 //functionality for search feature
-  $(document).on('click', '#send', function() {
-    dataControl.omdbSearch($("#user_input").val())
-    .then(function(movieSearchResults) {
-      console.log("movieSearchResults", movieSearchResults);
-      dataControl.getMovies()
-      .then(function(movieData){
-        console.log("movieData", movieData);
-        $('#movie').append(movieHBS({movie: movieData}));
-      });
-    });
+  $(document).on('click', '#submitForSearch', function() {
+    alert("Your submit button is working");
+    // dataControl.omdbSearch($("#user_input").val())
+    // .then(function(movieSearchResults) {
+    //   console.log("movieSearchResults", movieSearchResults);
+    //   dataControl.getMovies()
+    //   .then(function(movieData){
+    //     console.log("movieData", movieData);
+    //     $('#movie').append(movieHBS({movie: movieData}));
+    //   });
+    // });
   });
 
 
