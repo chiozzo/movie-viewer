@@ -51,16 +51,7 @@ require(
         $("#loginRegister").toggle();
         console.log("geeeezzzz");
 
-        // $('#myMovies').append(movieHBS);
-
-        // console.log(movieData);
-      // });
-      // });
     });
-
-
-
-
 
     // adding click event to register
     $('#register').click(function(){
@@ -74,17 +65,28 @@ require(
 
 //functionality for search feature
   $(document).on('click', '#submitForSearch', function() {
-    alert("Your submit button is working");
+    // alert("Your submit button is working");
+    dataControl.omdbSearch($("#navSearchforMovies").val())
+    .then(function(movieSearchResults) {
+      // console.log("movieSearchResults", movieSearchResults);
+      dataControl.getMovies(movieSearchResults)
+
+    });
+
+  });
+
+
     // dataControl.omdbSearch($("#user_input").val())
     // .then(function(movieSearchResults) {
-    //   console.log("movieSearchResults", movieSearchResults);
-    //   dataControl.getMovies()
-    //   .then(function(movieData){
-    //     console.log("movieData", movieData);
-    //     $('#movie').append(movieHBS({movie: movieData}));
-    //   });
+      // console.log("movieSearchResults", movieSearchResults);
+      // dataControl.getMovies()
+      // .then(function(movieData){
+      //   console.log("movieData", movieData);
+        // $('#myMovies').append("movieHBS"({movie: allMoviesArray}));
+        // console.log("movieHBS", movieHBS);
     // });
-  });
+  // });
+  // });
 
 
   // var movieData = movie.map(function(value, i, array){

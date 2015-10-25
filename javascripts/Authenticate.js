@@ -18,10 +18,6 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
             console.log("Login Failed!", error);
           } else{
             console.log("login successful");
-
-    // =========above is working
-
-
             console.log("Authenticated successfully with payload:", authData);
            
             getUsers.setUid(authData.uid);
@@ -29,7 +25,6 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
             $("#inputEmail").val('');
             $("#inputPassword").val('');
             //show user input on successful load to interact with app
-            
             $("#user_input").show();
             $("#send").show();
             //show firebase snapshot on load based on authData Uid

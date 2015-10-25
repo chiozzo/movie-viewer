@@ -2,24 +2,23 @@ define(["jquery", "q", "firebase"],
 	function($, q, firebase) {
 
 	var firebaseRef = new firebase("https://movie-viewe.firebaseio.com/");
-
-return {
 	// consolidating modules to prevent from going back and forth between files so much
 
-// SEARCHING MOVIE
-      //omdb search functionality
+return {
+// SEARCHING MOVIE //omdb search functionality
   omdbSearch: function(userInput) {
     var deferred = q.defer();
     //declare var for userInput
-    // var userInput = $("#user_input").val();
-    
+    var userInput = $("#navSearchforMovies").val();
     //split and join userInput to inject into url in a format readable for api
     userInput = userInput.split(" ").join("+");
-    $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&y=&plot=short&r=json" }).done(function(movie){
+    $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&y=&plot=short&r=json" })
+    .done(function(movieMatches){
     		console.log("userInput", userInput);
-      	console.log("movie", movie);
-      	//return movie object Search key value
-      	deferred.resolve(movie.Search);
+      	console.log("movieMatches", movieMatches);
+
+      	//return movieMatches object Search key value
+      	deferred.resolve(movieMatches.Search);
     })
   	.fail(function(){
     	console.log("OMDb search failure");
