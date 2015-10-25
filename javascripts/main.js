@@ -6,20 +6,23 @@ requirejs.config({
     "bootstrap": "../lib/bower_components/bootstrap/dist/js/bootstrap.min",
     "firebase" : "../lib/bower_components/firebase/firebase",
     "lodash" : "../lib/bower_components/lodash/lodash.min",
-<<<<<<< HEAD
-    "noUiSlider": "../lib/noUiSlider.8.0.2/nouislider.min",
-    "q" : "../lib/bower_components/q/q"
+    "nouislider": "../lib/bower_components/nouislider/distribute/nouislider",
+    "q" : "../lib/bower_components/q/q",
+    "bootstrap-star-rating": "../lib/bower_components/bootstrap-star-rating/js/star-rating",
+    "scotch-panels": "../lib/bower_components/scotch-panels/dist/scotchPanels.min"
   },
   shim: {
     "bootstrap": ["jquery"],
-    "noUiSlider": ["jquery"],
-    "firebase" : {exports: "Firebase"}
-    }
-  });
+    "scotch-panels": ["jquery"],
+    "bootstrap-star-rating": ["bootstrap"],
+    "nouislider": ["jquery"],
+    "firebase": {exports: "Firebase"}
+  }
+});
 
-requirejs(
-  ["jquery", "q", "dataControl", "getUsers", "lodash", "bootstrap", "firebase", "hbs", "Authenticate", "movieTemplates", "hbs!../templates/movie"],
-  function($, q, dataControl, getUsers, _, bootstrap, firebase, handlebars, authenticate, templates, movieHBS) {
+require(
+  ["jquery", "q", "lodash","bootstrap", "scotch-panels", "bootstrap-star-rating", "nouislider","dataControl", "authenticate", "movieTemplates","hbs!../templates/movie" ],
+  function($, q, _, bootstrap, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, templates, movieHBS) {
 
     var firebaseRef = new Firebase("https://movie-viewe.firebaseio.com/");
 
@@ -28,19 +31,32 @@ requirejs(
     $("#send").hide();
 
     //Declare variable for firebase reference
-    authenticate.logInUser(firebaseRef);
+    // authenticate.logInUser(firebaseRef);
 
     //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
     $('#login').on('click', function () {
       console.log("click");
-      $('#myModal').modal('toggle');
+      authenticate.logInUser()
+      // $('#myModal').modal('toggle');
     });
 
     //click event to login user
-    $(document).on('click', "#sendLogin", function() {
-      authenticate.logInUser(firebaseRef);
-      $('#myModal').modal('toggle');
+    $(document).on('click', "#login", function() {
+      authenticate.logInUser()
+      // .then(function(getMovies) {
+        dataControl.getMovies()
+        .then(function(movieData) {
+        $('#myMovies').append('toggle');
+        $("#loginRegister").remove();
+        console.log("geeeezzzz");
+        // movieTemplates.templates(movieData)
+      $('#myMovies').append(templates);
+        
+        console.log(movieData);
+      // });
+      });
     });
+
 
 
     // adding click event to register
@@ -61,7 +77,7 @@ requirejs(
       dataControl.getMovies()
       .then(function(movieData){
         console.log("movieData", movieData);
-        // $('#movie').append(movieHBS({movie: movieData}));
+        $('#movie').append(movieHBS({movie: movieData}));
       });
     });
   });
@@ -124,9 +140,6 @@ requirejs(
   //     });
   // });
 
-
-
-
 //Functionality for delete button
  $(document).on("click", "span[id^='delete#']", function() {
     var uniqueIdentifier = this.id.split("#")[1];
@@ -139,25 +152,10 @@ requirejs(
     }).done(function(){
         console.log("Successfully deleted movie");
     });
+  });
 
-=======
-    "nouislider": "../lib/bower_components/nouislider/distribute/nouislider",
-    "q": "../lib/bower_components/q/q",
-    "bootstrap-star-rating": "../lib/bower_components/bootstrap-star-rating/js/star-rating",
-    "scotch-panels": "../lib/bower_components/scotch-panels/dist/scotchPanels.min"
-  },
-  shim: {
-    "bootstrap": ["jquery"],
-    "scotch-panels": ["jquery"],
-    "bootstrap-star-rating": ["bootstrap"],
-    "nouislider": ["jquery"],
-    "firebase": {exports: "Firebase"}
-  }
-});
 
-require(
-  ["jquery", "q", "lodash","bootstrap", "scotch-panels", "bootstrap-star-rating", "nouislider"],
-  function($, q, _, bootstrap, scotchPanels, bootstrapStarRating, noUiSlider) {
+
 
   $(".starRating").rating({
     min:0,
@@ -218,14 +216,15 @@ require(
     panelExample.close();
   });
 
-  noUiSlider.create(document.getElementById('sliderInput'), {
-    start: 0,
-    connect: 'lower',
-    step: 1,
-    range: {
-      'min': 0,
-      'max': 10
-    }
->>>>>>> b85cd2728312a98fe10019e43a34a3ce8bb21dfd
-  });
+  // commenting out while i am working 
+  // noUiSlider.create(document.getElementById('sliderInput'), {
+  //   start: 0,
+  //   connect: 'lower',
+  //   step: 1,
+  //   range: {
+  //     'min': 0,
+  //     'max': 10
+  //   }
+  // });
+  
 });

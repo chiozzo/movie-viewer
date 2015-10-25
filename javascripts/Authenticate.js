@@ -7,8 +7,8 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
       //this logs user into firebase based on email and password
     	logInUser: function(email, password) {
     		firebaseRef.authWithPassword({
-          email: $("#inputEmail").val(),
-          password: $("#inputPassword").val()
+          email: $("#loginEmailInput").val(),
+          password: $("#loginPasswordInput").val()
 
           // 'email': "mncross@gmail.com",
           // 'password': "abc"
@@ -21,7 +21,9 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
 
     // =========above is working
 
+
             console.log("Authenticated successfully with payload:", authData);
+           
             getUsers.setUid(authData.uid);
             getUsers.load(authData.uid);
             $("#inputEmail").val('');
@@ -47,7 +49,7 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
 
               originalMoviesArray = allMoviesArray.slice();
 
-              $("#movie").html(templates.movie(allMoviesObject));
+              $("#myMovies").html(templates.movie(allMoviesObject));
             });
 
           }

@@ -78,6 +78,9 @@ return {
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(movieObject.imdbID).set(newMovie);
     	},
 
+
+// ======Get users movies =================
+
 	    getMovies : function(){
   			var deferred = q.defer();
       	$.ajax({
