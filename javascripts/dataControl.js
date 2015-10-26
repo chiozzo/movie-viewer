@@ -48,6 +48,8 @@ return {
   //     });
   //       return deferred.promise;
   //     },
+  
+// ====ADD MOVIE -----------
 
     addMovie: function(movieObject) {
       var newMovie;
@@ -111,6 +113,7 @@ return {
       $(thisButton).addClass("btn-default");
       $(thisButton).text("Not Watched");
     },
+
 // FILTERS=================
 
      setFilterWatched: function(allMovies) {
