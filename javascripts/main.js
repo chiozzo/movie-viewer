@@ -44,7 +44,7 @@ require(
     });
 
     //click event to login user
-    $(document).on('click', "#login", function() {
+    $(document).on('click', "#loginUserButton", function() {
       authenticate.logInUser()
 
       // .then(function(movies) {
@@ -97,7 +97,7 @@ require(
   //   };
   // });
 
-  
+
 
 //add movie to firebase database
 
@@ -112,7 +112,7 @@ require(
       $(this).removeClass("btn-default");
       $(this).addClass("btn-danger");
       $(this).text("Remove Movie");
-    
+
   });
 
 
@@ -255,7 +255,7 @@ require(
     panelExample.close();
   });
 
-  // commenting out while i am working 
+  // commenting out while i am working
   // noUiSlider.create(document.getElementById('sliderInput'), {
   //   start: 0,
   //   connect: 'lower',
@@ -265,5 +265,5 @@ require(
   //     'max': 10
   //   }
   // });
-  
+
 });
