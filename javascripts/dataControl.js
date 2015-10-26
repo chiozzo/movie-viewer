@@ -56,7 +56,7 @@ return {
           Title: movieObject.Title,
           Year: movieObject.Year,
           Actors: movieObject.Actors.replace(/(, )/g, "|").split('|'),
-          watched: false,
+          Watched: false,
           Poster: "../images/defaultPoster.jpg",
           rating: 0,
           imdbID: movieObject.imdbID,
@@ -67,13 +67,14 @@ return {
           Title: movieObject.Title,
           Year: movieObject.Year,
           Actors: movieObject.Actors.replace(/(, )/g, "|").split('|'),
-          watched: false,
+          Watched: false,
           Poster: "http://img.omdbapi.com/?i=" + movieObject.imdbID + "&apikey=8513e0a1",
           rating: 0,
           imdbID: movieObject.imdbID,
           savedToFirebase: true
         };
       }
+      // firebaseRef.child('users').child(firebaseRef.getAuth().uid).set(newMovie);
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(movieObject.imdbID).set(newMovie);
       },
 
@@ -92,7 +93,48 @@ return {
           deferred.reject(error);
         });
         return deferred.promise;
-      }
+      },
+
+// MARKING WATCHED/NOT WATCHED
+
+      markWatched: function(imdbID, thisButton) {
+      $(thisButton).attr("watched", true);
+      firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({watched: true});
+      $(thisButton).removeClass("btn-default");
+      $(thisButton).addClass("btn-success");
+      $(thisButton).text("Watched");
+    },
+      markUnwatched: function(imdbID, thisButton) {
+      $(thisButton).attr("watched", false);
+      firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({watched: false});
+      $(thisButton).removeClass("btn-success");
+      $(thisButton).addClass("btn-default");
+      $(thisButton).text("Not Watched");
+    },
+// FILTERS=================
+
+     setFilterWatched: function(allMovies) {
+        var filteredWatchedMovies = allMovies.filter(function(movie){
+        console.log(movie.watched);
+        if ( movie.watched == true) {
+          return movie;
+        // console.log("success of filter");
+        }
+      });
+      console.log("filteredWatchedMovies", filteredWatchedMovies);
+      return filteredWatchedMovies;
+    },
+
+    setFilterNotWatched:  function(allMovies) {
+      var filteredNotWatchedMovies = allMovies.filter(function(movie){
+        console.log(movie.notWatched);
+        if ( movie.watched == false ) {
+          return movie;
+        }
+      });
+      console.log("filteredNotWatchedMovies", filteredNotWatchedMovies);
+      return filteredNotWatchedMovies;
+    },
 
 
 
