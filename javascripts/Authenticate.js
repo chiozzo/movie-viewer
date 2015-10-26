@@ -58,10 +58,12 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
     // ==================below registers user
 
         getRegister: function(){
-          var newUserEmail = $('#inputEmail').val();
+          console.log($('#registerEmailInput').val());
+          console.log($('#registerPasswordInput').val());
+          var newUserEmail = $('#registerEmailInput').val();
           firebaseRef.createUser({
             email    : newUserEmail,
-            password : $('#inputPassword').val()
+            password : $('#registerPasswordInput').val()
             }, function(error, userData) {
                 if (error) {
                   console.log("Error creating user:", error);
@@ -70,7 +72,6 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
                       userEmail: newUserEmail
                     };
                     firebaseRef.child('users').child(userData.uid).set(newUser);
-                    $('#loginMessage').text(newUserEmail + " is now registered. Please login.");
                   }
                 })
               }

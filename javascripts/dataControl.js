@@ -14,17 +14,40 @@ return {
     userInput = userInput.split(" ").join("+");
     $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&y=&plot=short&r=json" })
     .done(function(movieMatches){
-        console.log("userInput", userInput);
-        console.log("movieMatches", movieMatches);
+      var searchResultsArray = movieMatches.Search;
+      console.log("searchResultsArray", searchResultsArray);
+      var mappedSearchResultsArray = searchResultsArray.map(function(currentValue) {
+        if(currentValue.Poster === "N/A") {
+          currentValue.Poster = "../images/defaultPoster.jpg";
+        } else {
+          currentValue.Poster = "http://img.omdbapi.com/?i=" + currentValue.imdbID + "&apikey=8513e0a1";
+        }
+        currentValue.active = true;
+        return currentValue;
+      });
 
-        //return movieMatches object Search key value
-        deferred.resolve(movieMatches.Search);
+     
+        deferred.resolve(mappedSearchResultsArray);
     })
     .fail(function(){
       console.log("OMDb search failure");
     });
       return deferred.promise;
  },
+
+    OMDbIDSearch: function(imdbID) {
+      var deferred = q.defer();
+      $.ajax("http://www.omdbapi.com/?i=" + imdbID + "&r=json")
+      .done(function(exactMatch) {
+        deferred.resolve(exactMatch);
+      })
+      .fail(function() {
+        console.log("OMDb exact match failed");
+      });
+      return deferred.promise;
+    },
+
+
 
 
   //search user library WIP
@@ -48,7 +71,7 @@ return {
   //     });
   //       return deferred.promise;
   //     },
-  
+
 // ====ADD MOVIE -----------
 
     addMovie: function(movieObject) {
@@ -62,7 +85,8 @@ return {
           Poster: "../images/defaultPoster.jpg",
           rating: 0,
           imdbID: movieObject.imdbID,
-          savedToFirebase: true
+          savedToFirebase: true,
+          active: true
         };
       } else {
         newMovie = {
@@ -73,10 +97,10 @@ return {
           Poster: "http://img.omdbapi.com/?i=" + movieObject.imdbID + "&apikey=8513e0a1",
           rating: 0,
           imdbID: movieObject.imdbID,
-          savedToFirebase: true
+          savedToFirebase: true,
+          active: true
         };
       }
-      // firebaseRef.child('users').child(firebaseRef.getAuth().uid).set(newMovie);
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(movieObject.imdbID).set(newMovie);
       },
 

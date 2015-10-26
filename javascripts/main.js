@@ -57,7 +57,7 @@ require(
     });
 
     // adding click event to register
-    $('#register').click(function(){
+    $('#registerUserButton').click(function(){
       authenticate.getRegister();
     });
 
@@ -101,15 +101,9 @@ require(
 
 //add movie to firebase database
 
-  $(document).on('click', '#addRemoveMovieButton', function() {
+  $(document).on('click', '#addMovieButton', function() {
     var thisImdbID = $(this).attr("imdbid");
-    if ($(this).attr("savedToFirebase") == "true") {
-      dataControl.deleteUsersMovies(thisImdbID);
-      $(this).parents(".panel").hide('slow', function() {
-        $(this).remove();
-      });
-    } else {
-      dataControl.omdbSearch(thisImdbID)
+      dataControl.OMDbIDSearch(thisImdbID)
       .then(function(OMDbExactMatch) {
         var currentUser = firebaseRef.getAuth().uid;
         dataControl.addUserMovie(OMDbExactMatch);
@@ -118,7 +112,7 @@ require(
       $(this).removeClass("btn-default");
       $(this).addClass("btn-danger");
       $(this).text("Remove Movie");
-    }
+    
   });
 
 
