@@ -1,8 +1,8 @@
 define(["jquery", "q", "firebase"],
-	function($, q, firebase) {
+  function($, q, firebase) {
 
-	var firebaseRef = new firebase("https://movie-viewe.firebaseio.com/");
-	// consolidating modules to prevent from going back and forth between files so much
+  var firebaseRef = new firebase("https://movie-viewe.firebaseio.com/");
+  // consolidating modules to prevent from going back and forth between files so much
 
 return {
 // SEARCHING MOVIE //omdb search functionality
@@ -14,16 +14,16 @@ return {
     userInput = userInput.split(" ").join("+");
     $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&y=&plot=short&r=json" })
     .done(function(movieMatches){
-    		console.log("userInput", userInput);
-      	console.log("movieMatches", movieMatches);
+        console.log("userInput", userInput);
+        console.log("movieMatches", movieMatches);
 
-      	//return movieMatches object Search key value
-      	deferred.resolve(movieMatches.Search);
+        //return movieMatches object Search key value
+        deferred.resolve(movieMatches.Search);
     })
-  	.fail(function(){
-    	console.log("OMDb search failure");
-  		return deferred.promise;
-  	});
+    .fail(function(){
+      console.log("OMDb search failure");
+    });
+      return deferred.promise;
  },
 
 
@@ -75,29 +75,28 @@ return {
         };
       }
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(movieObject.imdbID).set(newMovie);
-    	},
+      },
 
 
 // ======Get users movies =================
 
-	    getMovies : function(){
-  			var deferred = q.defer();
-      	$.ajax({
-      		url:"https://movie-viewe.firebaseio.com/movie.json"
-      	}).done(function(firebaseData){
-        	console.log("firebase data : ", firebaseData);
-        	deferred.resolve(firebaseData);
-       	})
-      	.fail(function(xhr, status, error){
-        	deferred.reject(error);
-      	});
-      	return deferred.promise;
-  		}
+      getMovies : function(){
+        var deferred = q.defer();
+        $.ajax({
+          url:"https://movie-viewe.firebaseio.com/movie.json"
+        }).done(function(firebaseData){
+          console.log("firebase data : ", firebaseData);
+          deferred.resolve(firebaseData);
+        })
+        .fail(function(xhr, status, error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      }
 
 
 
-	};
+  };
 
 });
  
-

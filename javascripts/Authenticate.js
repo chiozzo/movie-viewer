@@ -9,7 +9,7 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
     		firebaseRef.authWithPassword({
           email: $("#loginEmailInput").val(),
           password: $("#loginPasswordInput").val()
-
+          
           // 'email': "mncross@gmail.com",
           // 'password': "abc"
 
@@ -22,6 +22,7 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
            
             getUsers.setUid(authData.uid);
             getUsers.load(authData.uid);
+
             $("#inputEmail").val('');
             $("#inputPassword").val('');
             //show user input on successful load to interact with app
@@ -49,7 +50,9 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
 
           }
         })
+
       },
+
 
 
     // ==================below registers user
