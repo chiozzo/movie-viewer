@@ -9,7 +9,6 @@ return {
   omdbSearch: function(userInput) {
     var deferred = q.defer();
     //declare var for userInput
-    var userInput = $("#navSearchforMovies").val();
     //split and join userInput to inject into url in a format readable for api
     userInput = userInput.split(" ").join("+");
     $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&y=&plot=short&r=json" })
@@ -26,7 +25,7 @@ return {
         return currentValue;
       });
 
-     
+
         deferred.resolve(mappedSearchResultsArray);
     })
     .fail(function(){
@@ -112,7 +111,7 @@ return {
         $.ajax({
           url:"https://movie-viewe.firebaseio.com/users/"+ firebaseRef.getAuth().uid +"/movies.json"
         }).done(function(firebaseData){
-          console.log("firebase data : ", firebaseData);
+          // console.log("firebase data : ", firebaseData);
           var firebaseMoviesArray = _.values(firebaseData);
           deferred.resolve(firebaseMoviesArray);
         })
@@ -144,7 +143,7 @@ return {
      setFilterWatched: function(allMovies) {
         var filteredWatchedMovies = allMovies.filter(function(movie){
         console.log(movie.watched);
-        if ( movie.watched == true) {
+        if ( movie.watched === true) {
           return movie;
         // console.log("success of filter");
         }
@@ -156,7 +155,7 @@ return {
     setFilterNotWatched:  function(allMovies) {
       var filteredNotWatchedMovies = allMovies.filter(function(movie){
         console.log(movie.notWatched);
-        if ( movie.watched == false ) {
+        if ( movie.watched === false ) {
           return movie;
         }
       });
@@ -169,4 +168,4 @@ return {
   };
 
 });
- 
+

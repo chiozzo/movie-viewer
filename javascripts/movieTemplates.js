@@ -3,12 +3,7 @@ define(["jquery", "hbs", "bootstrap"], function($, hbs, bootstrap) {
 
 	return {
 		loadProfileHbs: function(allMoviesArray) {
-			console.log("loadProfileHbs ran");
-			console.log("allMoviesArray", allMoviesArray);
 			require(['hbs!../templates/movie'], function(movieHBS) {
-				console.log("handlebar attached wtf");
-				console.log($('#myMovies'));
-				console.log("movieHBS", movieHBS);
 				$("#myMovies").html(movieHBS({movie: allMoviesArray}));
 									$(".starRating").rating({
 						min:0,
@@ -51,7 +46,7 @@ define(["jquery", "hbs", "bootstrap"], function($, hbs, bootstrap) {
 						// 	10: 'label label-success'
 						// }
 					});
-			});	
+			});
 		},
 
 		loadSearchResults: function(returnedSearchResults) {
@@ -60,6 +55,6 @@ define(["jquery", "hbs", "bootstrap"], function($, hbs, bootstrap) {
 			});
 		}
 
-	}
+	};
 });
 

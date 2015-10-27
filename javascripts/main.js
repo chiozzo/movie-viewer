@@ -57,7 +57,7 @@ require(
   $(document).on('click', '#searchMoviesButton', function() {
     var searchResultsArray;
     var combinedMoviesArray;
-    dataControl.OMDbSearch($('#searchText').val())
+    dataControl.omdbSearch($('#searchText').val())
     .then(function(OMDbSearchResults) {
       searchResultsArray = OMDbSearchResults;
       console.log("searchResultsArray", searchResultsArray);

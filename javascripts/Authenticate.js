@@ -9,7 +9,7 @@ define(["jquery", "firebase", "getUsers", "movieTemplates", "dataControl"],
     		firebaseRef.authWithPassword({
           email: $("#loginEmailInput").val(),
           password: $("#loginPasswordInput").val()
-          
+
           // 'email': "mncross@gmail.com",
           // 'password': "abc"
 
@@ -27,7 +27,7 @@ define(["jquery", "firebase", "getUsers", "movieTemplates", "dataControl"],
             });
 
           }
-        })
+        });
 
       },
 
@@ -51,11 +51,11 @@ define(["jquery", "firebase", "getUsers", "movieTemplates", "dataControl"],
                     };
                     firebaseRef.child('users').child(userData.uid).set(newUser);
                   }
-                })
+                });
               }
-        }
+        };
 
 
   });
- 
+
 
