@@ -47,10 +47,10 @@ require(
   });
 
   $('#registerUserButton').click(function(){
-    authenticate.registerNewUser().then(function(authArray){
+    authenticate.getRegister().then(function(authArray){
       var email = authArray[0];
       var password = authArray[1];
-      authenticate.loginUser(email, password);
+      authenticate.logInUser(email, password);
     });
   });
 
