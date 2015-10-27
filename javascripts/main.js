@@ -21,13 +21,8 @@ requirejs.config({
 });
 
 require(
-<<<<<<< HEAD
-  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "authenticate"],
-  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate) {
-=======
   ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "Authenticate", "movieTemplates"],
   function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, movieTemplates) {
->>>>>>> JWH
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
@@ -97,7 +92,7 @@ require(
       dataControl.OMDbIDSearch(thisMovie)
       .then(function(OMDbExactMatch) {
         var currentUser = firebaseRef.getAuth().uid;
-        dataControl.addUserMovie(OMDbExactMatch);
+        dataControl.addMovie(OMDbExactMatch);
       });
     $(this).remove();
   });
