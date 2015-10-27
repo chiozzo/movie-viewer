@@ -1,5 +1,5 @@
-define(["jquery", "firebase", "getUsers", "movieTemplates", "dataControl"],
-	function($, firebase, getUsers, templates, dataControl) {
+define(["jquery", "q", "firebase", "getUsers", "movieTemplates", "dataControl"],
+	function($, q, firebase, getUsers, templates, dataControl) {
 
     var firebaseRef = new firebase("https://movie-viewe.firebaseio.com");
 
@@ -7,8 +7,8 @@ define(["jquery", "firebase", "getUsers", "movieTemplates", "dataControl"],
       //this logs user into firebase based on email and password
     	logInUser: function(email, password) {
     		firebaseRef.authWithPassword({
-          email: $("#loginEmailInput").val(),
-          password: $("#loginPasswordInput").val()
+          email: email,
+          password: password
 
           // 'email': "mncross@gmail.com",
           // 'password': "abc"
@@ -36,6 +36,7 @@ define(["jquery", "firebase", "getUsers", "movieTemplates", "dataControl"],
     // ==================below registers user
 
         getRegister: function(){
+          var deferred = q.defer();
           console.log($('#registerEmailInput').val());
           console.log($('#registerPasswordInput').val());
           var newUserEmail = $('#registerEmailInput').val();
@@ -50,8 +51,13 @@ define(["jquery", "firebase", "getUsers", "movieTemplates", "dataControl"],
                       userEmail: newUserEmail
                     };
                     firebaseRef.child('users').child(userData.uid).set(newUser);
+                    var promiseArray = [newUserEmail, $("#registerPasswordInput").val()];
+
+                    deferred.resolve(promiseArray);
                   }
                 });
+               
+              return deferred.promise;
               }
         };
 
