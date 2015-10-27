@@ -110,10 +110,11 @@ return {
       getMovies : function(){
         var deferred = q.defer();
         $.ajax({
-          url:"https://movie-viewe.firebaseio.com/movie.json"
+          url:"https://movie-viewe.firebaseio.com/users/"+ firebaseRef.getAuth().uid +"/movies.json"
         }).done(function(firebaseData){
           console.log("firebase data : ", firebaseData);
-          deferred.resolve(firebaseData);
+          var firebaseMoviesArray = _.values(firebaseData);
+          deferred.resolve(firebaseMoviesArray);
         })
         .fail(function(xhr, status, error){
           deferred.reject(error);

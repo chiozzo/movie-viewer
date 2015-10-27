@@ -1,18 +1,15 @@
-
-
-
 requirejs.config({
   baseUrl: "./javascripts",
   paths:{
     "jquery": "../lib/bower_components/jquery/dist/jquery.min",
-    "hbs": "../lib/bower_components/require-handlebars-plugin/hbs",
-    "bootstrap": "../lib/bower_components/bootstrap/dist/js/bootstrap.min",
-    "firebase" : "../lib/bower_components/firebase/firebase",
+    "q": "../lib/bower_components/q/q",
     "lodash" : "../lib/bower_components/lodash/lodash.min",
-    "nouislider": "../lib/bower_components/nouislider/distribute/nouislider",
-    "q" : "../lib/bower_components/q/q",
+    "bootstrap": "../lib/bower_components/bootstrap/dist/js/bootstrap.min",
+    "hbs": "../lib/bower_components/require-handlebars-plugin/hbs",
+    "firebase" : "../lib/bower_components/firebase/firebase",
+    "scotch-panels": "../lib/bower_components/scotch-panels/dist/scotchPanels.min",
     "bootstrap-star-rating": "../lib/bower_components/bootstrap-star-rating/js/star-rating",
-    "scotch-panels": "../lib/bower_components/scotch-panels/dist/scotchPanels.min"
+    "nouislider": "../lib/bower_components/nouislider/distribute/nouislider"
   },
   shim: {
     "bootstrap": ["jquery"],
@@ -24,125 +21,90 @@ requirejs.config({
 });
 
 require(
-  ["jquery", "q", "lodash","bootstrap", "scotch-panels", "bootstrap-star-rating", "nouislider","dataControl", "authenticate", "movieTemplates","hbs!../templates/movie" ],
-  function($, q, _, bootstrap, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, templates, movieHBS) {
+  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "Authenticate"],
+  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate) {
 
-    var firebaseRef = new Firebase("https://movie-viewe.firebaseio.com/");
+  var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
-    //Hide search and submit inputs until user is logged in
-    $("#user_input").hide();
-    $("#send").hide();
+  var panelExample = $('#registerForm').scotchPanel({
+    containerSelector: '#panelContainer', // Make this appear on the entire screen
+    direction: 'left', // Make it toggle in from the left
+    duration: 300, // Speed in ms how fast you want it to be
+    transition: 'ease', // CSS3 transition type: linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier(P1x,P1y,P2x,P2y)
+    distanceX: '100%', // Size of the toggle
+    enableEscapeKey: true // Clicking Esc will close the panel
+  });
 
-    //Declare variable for firebase reference
-    // authenticate.logInUser(firebaseRef);
+  // authenticate.loginUser("mncross@gmail.com", "abc");
 
-    //this toggles the modal window to 'shown' and 'hidden' when the user clicks on the element with the id of 'login'
-    $('#login').on('click', function () {
-      console.log("click");
-      authenticate.logInUser()
-      // $('#myModal').modal('toggle');
-    });
+  $(document).on('click', '#registerFormButton', function() {
+    $('#registerForm').show();
+    panelExample.open();
+  });
 
-    //click event to login user
-    $(document).on('click', "#loginUserButton", function() {
-      authenticate.logInUser()
+  $("#loginUserButton").click(function(){
+    authenticate.logInUser($('#loginEmailInput').val(), $('#loginPasswordInput').val());
+  });
 
-      // .then(function(movies) {
-      //   dataControl.getMovies(movies)
-        // .then(function(movieData) {
-        // $('#myMovies').append('toggle');
-        $("#loginRegister").toggle();
-        console.log("geeeezzzz");
-
-    });
-
-    // adding click event to register
-    $('#registerUserButton').click(function(){
-      authenticate.getRegister();
-    });
-
-  // var allMoviesArray = [];
-  // var allMoviesObject = {};
-  // var originalMoviesArray = [];
-  // var movieObject;
-
-// //functionality for search feature
-//   $(document).on('click', '#submitForSearch', function() {
-//     // alert("Your submit button is working");
-//     dataControl.omdbSearch($("#navSearchforMovies").val())
-//     .then(function(movieSearchResults) {
-//       // console.log("movieSearchResults", movieSearchResults);
-//       dataControl.getMovies(movieSearchResults)
-
-//     });
-
-//   });
-
-// functionality for search feature
-  $(document).on('click', '#submitForSearch', function() {
-    dataControl.omdbSearch($("#navSearchforMovies").val()).then(function(movieMatches) {
-      templates.loadProfileHbs(movieMatches)
+  $('#registerUserButton').click(function(){
+    authenticate.registerNewUser().then(function(authArray){
+      var email = authArray[0];
+      var password = authArray[1];
+      authenticate.loginUser(email, password);
     });
   });
 
+  $(document).on('click', '#searchMoviesButton', function() {
+    var searchResultsArray;
+    var combinedMoviesArray;
+    dataControl.OMDbSearch($('#searchText').val())
+    .then(function(OMDbSearchResults) {
+      searchResultsArray = OMDbSearchResults;
+      console.log("searchResultsArray", searchResultsArray);
+      dataControl.getUsersMovies()
+      .then(function(firebaseMovies) {
+        var firebaseMoviesArray = _.values(firebaseMovies).sort(function(a, b) {
+          if (a.Title[0] < b.Title[0]) {
+            return -1;
+          }
+          if (a.Title[0] > b.Title[0]) {
+            return 1;
+          }
+          return 0;
+        });
+        var firebaseMoviesIMDbID = _.chain(firebaseMoviesArray).pluck('imdbID').uniq().value();
+        var filteredSearchResultsArray = searchResultsArray.filter(function(value, index, array) {
+          if ($.inArray(value.imdbID, firebaseMoviesIMDbID) === -1) {
+            return true;
+          } else{
+            return false;
+          }
+        });
+        combinedMoviesArray = filteredSearchResultsArray.concat(firebaseMoviesArray);
+        domControl.loadProfileHbs(combinedMoviesArray);
+      });
+    });
+  });
 
-
-
-  // var movieData = movie.map(function(value, i, array){
-  //   return {
-  //     Title : array[i].Title,
-  //     Year : array[i].Year,
-  //     Poster : "http://img.omdbapi.com/?i=" + array[i].imdbID + "&apikey=8513e0a1",
-  //     imdbID : array[i].imdbID
-  //   };
-  // });
-
-
-
-//add movie to firebase database
-
-  $(document).on('click', '#addMovieButton', function() {
-    var thisImdbID = $(this).attr("imdbid");
-      dataControl.OMDbIDSearch(thisImdbID)
+  $(document).on('click', '.addMovieButton', function() {
+    var thisMovie = $(this).attr("imdbid");
+      dataControl.OMDbIDSearch(thisMovie)
       .then(function(OMDbExactMatch) {
         var currentUser = firebaseRef.getAuth().uid;
         dataControl.addUserMovie(OMDbExactMatch);
       });
-      $(this).attr("savedToFirebase", true);
-      $(this).removeClass("btn-default");
-      $(this).addClass("btn-danger");
-      $(this).text("Remove Movie");
-
+    $(this).remove();
   });
 
-
-
-  // $(document).on("click", "#addRemoveMovieButton", function() {
-  //     var thisImdbID = this.id.split("#")[1];
-  //     console.log("thisImdbID", thisImdbID);
-  //     dataControl.addMovie(thisImdbID)
-  //     .then(function(myMovie){
-  //       console.log("myMovie", myMovie);
-  //      var myNewMovie = myMovie;
-  //       myNewMovie.Poster = "http://img.omdbapi.com/?i=" + thisImdbID + "&apikey=8513e0a1";
-  //       myNewMovie.UserRating = 0;
-  //       myNewMovie.Watched = false;
-  //       console.log("myNewMovie", myNewMovie);
-  //       var uid = getUsers.getUid();
-  //       $.ajax({
-  //         url: "https://movie-viewe.firebaseio.com/users/" + uid + "/movies.json",
-  //         method: "POST",
-  //         data: JSON.stringify(myNewMovie)
-  //         }).done(function(addedMovie) {
-  //           console.log("Your new movie is ", addedMovie);
-  //         });
-  //     });
-  // });
-
-// WATCHED - Functionality for watched
+  $(document).on("click", ".deleteButton", function() {
+    var imdbid = $(this).attr("imdbid");
+    dataControl.deleteUsersMovies(imdbid);
+    $(this).parents(".thisMovie").hide('slow', function() {
+      $(this).remove();
+    });
+  });
 
   $(document).on('click', '.watchedButton', function() {
-    alert("watched button is working");
     var thisMovie = $(this).attr("imdbid");
     var thisButton = $(this);
     if ($(this).attr("watched") == "true") {
@@ -152,118 +114,45 @@ require(
     }
   });
 
-  // filter for movies watched
-  $(document).on("click", "#watched", function(){
-    dataControl.getMovies()
-     .then(function(allMovies) {
-        var filterWatchedMovies = dataControl.setFilterWatched(allMovies);
-        templates.loadProfileHbs(filterWatchedMovies);
-    });
-    console.log("watched filter has been clicked");
+  $(document).on('rating.change', '.starRating', function(event, value, caption) {
+    var thisButton = $(this);
+    var thisMovie = $(this).attr("imdbid");
+    dataControl.changeRating(thisMovie, thisButton, value);
   });
 
-  // filter for movies NOT watched
+// filter for movies watched
+  $(document).on("click", "#filterWatched", function(){
+    dataControl.getUsersMovies()
+     .then(function(allMovies) {
+        domControl.loadProfileHbs(filtering.setFilterWatched(allMovies));
+    });
+  });
 
-  $(document).on("click", "#unwatched", function(){
-    dataControl.getMovies()
+// filter for movies NOT watched
+
+  $(document).on("click", "#filterToWatch", function(){
+    dataControl.getUsersMovies()
       .then(function(allMovies) {
-        templates.loadProfileHbs(dataControl.setFilterNotWatched(allMovies));
+        domControl.loadProfileHbs(filtering.setFilterNotWatched(allMovies));
       });
   });
 
-
-
-
-
-
-
-
-
-//Functionality for delete button
- $(document).on("click", "span[id^='delete#']", function() {
-    var uniqueIdentifier = this.id.split("#")[1];
-    console.log("unique identifier", uniqueIdentifier);
-    var uid = getUsers.getUid();
-    $.ajax({
-      url: "https:movie-viewer.firebaseio.com/users/" + uid + "/movies/" + uniqueIdentifier + ".json",
-      method: "DELETE",
-      contentType: "application/json"
-    }).done(function(){
-        console.log("Successfully deleted movie");
-    });
-  });
-
-
-
-
-  $(".starRating").rating({
-    min:0,
-    max:10,
-    step:1,
-    size:'xs',
-    showClear:true,
-    starCaptions: {
-      1: 'One Star',
-      2: 'Two Stars',
-      3: 'Three Stars',
-      4: 'Four Stars',
-      5: 'Five Stars',
-    },
-    starCaptionClasses: function(val) {
-      if (val === 0) {
-        return 'label label-default';
-      } else if (val < 2) {
-        return 'label label-danger';
-      } else if (val < 3) {
-        return 'label label-warning';
-      } else if (val < 4) {
-        return 'label label-info';
-      } else if (val < 5) {
-        return 'label label-primary';
-      } else {
-        return 'label label-success';
-      }
+  var slider = document.getElementById('sliderInput');
+  noUiSlider.create(slider, {
+    start: 0,
+    connect: 'lower',
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 10
     }
-    // {
-    //  1: 'label label-danger',
-    //  2: 'label label-danger',
-    //  3: 'label label-warning',
-    //  4: 'label label-warning',
-    //  5: 'label label-info',
-    //  6: 'label label-info',
-    //  7: 'label label-primary',
-    //  8: 'label label-primary',
-    //  9: 'label label-success',
-    //  10: 'label label-success'
-    // }
   });
-
-  var panelExample = $('#registerForm').scotchPanel({
-      containerSelector: '#panelContainer', // Make this appear on the entire screen
-      direction: 'left', // Make it toggle in from the left
-      duration: 300, // Speed in ms how fast you want it to be
-      transition: 'ease', // CSS3 transition type: linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier(P1x,P1y,P2x,P2y)
-      distanceX: '100%', // Size of the toggle
-      enableEscapeKey: true // Clicking Esc will close the panel
+  slider.noUiSlider.on('slide', function(values){
+      dataControl.getMovies()
+      .then(function(allMovies){
+        var starValue = Math.round(values[0]);
+        var filteredMovies = filtering.filterByStars(allMovies, starValue);
+        domControl.loadProfileHbs(filteredMovies);
+      });
   });
-
-  $(document).on('click', '#registerFormButton', function() {
-    panelExample.open();
-  });
-
-  $(document).on('click', '#registerUserButton', function() {
-    panelExample.close();
-  });
-
-  // commenting out while i am working
-  // noUiSlider.create(document.getElementById('sliderInput'), {
-  //   start: 0,
-  //   connect: 'lower',
-  //   step: 1,
-  //   range: {
-  //     'min': 0,
-  //     'max': 10
-  //   }
-  // });
-
 });
