@@ -83,7 +83,7 @@ require(
           }
         });
         combinedMoviesArray = filteredSearchResultsArray.concat(firebaseMoviesArray);
-        movieTemplates.loadProfileHbs(combinedMoviesArray);
+        templates.loadProfileHbs(combinedMoviesArray);
       });
     });
   });
@@ -153,7 +153,7 @@ require(
       .then(function(allMovies){
         var starValue = Math.round(values[0]);
         var filteredMovies = filtering.filterByStars(allMovies, starValue);
-        movieTemplates.loadProfileHbs(filteredMovies);
+        templates.loadProfileHbs(filteredMovies);
       });
   });
 });
