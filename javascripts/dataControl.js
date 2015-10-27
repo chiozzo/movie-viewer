@@ -11,7 +11,7 @@ return {
     //declare var for userInput
     //split and join userInput to inject into url in a format readable for api
     userInput = userInput.split(" ").join("+");
-    $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&y=&plot=short&r=json" })
+    $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&type=movie&r=json" })
     .done(function(movieMatches){
       var searchResultsArray = movieMatches.Search;
       console.log("searchResultsArray", searchResultsArray);
@@ -142,8 +142,8 @@ return {
 
      setFilterWatched: function(allMovies) {
         var filteredWatchedMovies = allMovies.filter(function(movie){
-        console.log(movie.watched);
-        if ( movie.watched === true) {
+        console.log(movie.Watched);
+        if ( movies.Watched === true) {
           return movie;
         // console.log("success of filter");
         }
@@ -154,14 +154,19 @@ return {
 
     setFilterNotWatched:  function(allMovies) {
       var filteredNotWatchedMovies = allMovies.filter(function(movie){
-        console.log(movie.notWatched);
-        if ( movie.watched === false ) {
+        console.log(movie.Watched);
+        if ( movies.Watched === false ) {
           return movie;
         }
       });
       console.log("filteredNotWatchedMovies", filteredNotWatchedMovies);
       return filteredNotWatchedMovies;
     },
+
+    changeRating: function(ImdbID, ratingValue) {
+      firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(ImdbID).update({rating: ratingValue});
+
+    }
 
 
 

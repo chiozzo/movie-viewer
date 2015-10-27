@@ -23,7 +23,7 @@ requirejs.config({
 require(
 
   ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "Authenticate", "movieTemplates"],
-  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, movieTemplates) {
+  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, templates) {
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
@@ -118,23 +118,23 @@ require(
   $(document).on('rating.change', '.starRating', function(event, value, caption) {
     var thisButton = $(this);
     var thisMovie = $(this).attr("imdbid");
-    dataControl.changeRating(thisMovie, thisButton, value);
+    dataControl.changeRating(thisMovie, value);
   });
 
 // filter for movies watched
   $(document).on("click", "#filterWatched", function(){
-    dataControl.getUsersMovies()
+    dataControl.getMovies()
      .then(function(allMovies) {
-        domControl.loadProfileHbs(filtering.setFilterWatched(allMovies));
+        templates.loadProfileHbs(dataControl.setFilterWatched(allMovies));
     });
   });
 
 // filter for movies NOT watched
 
   $(document).on("click", "#filterToWatch", function(){
-    dataControl.getUsersMovies()
+    dataControl.getMovies()
       .then(function(allMovies) {
-        domControl.loadProfileHbs(filtering.setFilterNotWatched(allMovies));
+        templates.loadProfileHbs(dataControl.setFilterNotWatched(allMovies));
       });
   });
 
@@ -153,7 +153,7 @@ require(
       .then(function(allMovies){
         var starValue = Math.round(values[0]);
         var filteredMovies = filtering.filterByStars(allMovies, starValue);
-        domControl.loadProfileHbs(filteredMovies);
+        movieTemplates.loadProfileHbs(filteredMovies);
       });
   });
 });
