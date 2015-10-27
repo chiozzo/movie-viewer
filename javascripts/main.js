@@ -92,6 +92,7 @@ require(
     var thisMovie = $(this).attr("imdbid");
       dataControl.OMDbIDSearch(thisMovie)
       .then(function(OMDbExactMatch) {
+
         dataControl.addMovie(OMDbExactMatch);
       });
     $(this).remove();
