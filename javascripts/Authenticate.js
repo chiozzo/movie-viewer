@@ -1,5 +1,5 @@
-define(["jquery", "firebase", "getUsers", "movieTemplates"],
-	function($, firebase, getUsers, templates) {
+define(["jquery", "firebase", "getUsers", "movieTemplates", "dataControl"],
+	function($, firebase, getUsers, templates, dataControl) {
 
     var firebaseRef = new firebase("https://movie-viewe.firebaseio.com");
 
@@ -9,7 +9,7 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
     		firebaseRef.authWithPassword({
           email: $("#loginEmailInput").val(),
           password: $("#loginPasswordInput").val()
-          
+
           // 'email': "mncross@gmail.com",
           // 'password': "abc"
 
@@ -17,39 +17,17 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
           if (error) {
             console.log("Login Failed!", error);
           } else{
-            console.log("login successful");
-            console.log("Authenticated successfully with payload:", authData);
-           
-            getUsers.setUid(authData.uid);
-            getUsers.load(authData.uid);
-
-            $("#inputEmail").val('');
-            $("#inputPassword").val('');
-            //show user input on successful load to interact with app
-            $("#user_input").show();
-            $("#send").show();
-            //show firebase snapshot on load based on authData Uid
-            firebaseRef.child("users/" + authData.uid + "/movies/").on("value", function(snapshot){
-              var movies = snapshot.val();
-              console.log("movies", movies);
-              allMoviesArray = [];
-              
-              for (var key in movies){
-                var movieWithId = movies[key];
-                movieWithId.key = key;
-                console.log("movieWithId", movieWithId);
-                allMoviesArray[allMoviesArray.length] = movieWithId;
-              }
-
-              allMoviesObject = {movie : allMoviesArray};
-
-              originalMoviesArray = allMoviesArray.slice();
-              $("#myMovies").append(templates.loadProfileHbs(originalMoviesArray));
-
+            // console.log("login successful");
+            $("#loginRegister").remove();
+            $("#myNav").show();
+            dataControl.getMovies()
+              .then(function(originalMoviesArray) {
+                // console.log("originalMoviesArray", originalMoviesArray);
+             templates.loadProfileHbs(originalMoviesArray);
             });
 
           }
-        })
+        });
 
       },
 
@@ -73,11 +51,11 @@ define(["jquery", "firebase", "getUsers", "movieTemplates"],
                     };
                     firebaseRef.child('users').child(userData.uid).set(newUser);
                   }
-                })
+                });
               }
-        }
+        };
 
 
   });
- 
+
 

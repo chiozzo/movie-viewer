@@ -1,12 +1,10 @@
 
-define(["jquery", "hbs", "bootstrap", "hbs!../templates/movie"], function($, hbs, bootstrap, movieHBS) {
-	// var templates = {};
- //  templates.movie = movieTemplate;
+define(["jquery", "hbs", "bootstrap"], function($, hbs, bootstrap) {
 
 	return {
 		loadProfileHbs: function(allMoviesArray) {
-			require(['hbs!../templates/movie'], function(mainTpl) {
-				$("#myMovies").html(mainTpl({movies: allMoviesArray}));
+			require(['hbs!../templates/movie'], function(movieHBS) {
+				$("#myMovies").html(movieHBS({movie: allMoviesArray}));
 									$(".starRating").rating({
 						min:0,
 						max:5,
@@ -48,15 +46,15 @@ define(["jquery", "hbs", "bootstrap", "hbs!../templates/movie"], function($, hbs
 						// 	10: 'label label-success'
 						// }
 					});
-			});	
+			});
 		},
 
 		loadSearchResults: function(returnedSearchResults) {
-			require(['hbs!../templates/movie'], function(mainTpl) {
+			require(['hbs!../templates/movie'], function(movieHBS) {
 				$("#myMovies").html(returnedSearchResults);
 			});
 		}
 
-	}
+	};
 });
 

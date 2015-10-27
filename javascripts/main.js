@@ -21,8 +21,13 @@ requirejs.config({
 });
 
 require(
+<<<<<<< HEAD
   ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "authenticate"],
   function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate) {
+=======
+  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "Authenticate", "movieTemplates"],
+  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, movieTemplates) {
+>>>>>>> JWH
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
@@ -43,7 +48,7 @@ require(
   });
 
   $("#loginUserButton").click(function(){
-    authenticate.loginUser($('#loginEmailInput').val(), $('#loginPasswordInput').val());
+    authenticate.logInUser($('#loginEmailInput').val(), $('#loginPasswordInput').val());
   });
 
   $('#registerUserButton').click(function(){
@@ -57,13 +62,14 @@ require(
   $(document).on('click', '#searchMoviesButton', function() {
     var searchResultsArray;
     var combinedMoviesArray;
-    dataControl.OMDbSearch($('#searchText').val())
+    dataControl.omdbSearch($('#searchText').val())
     .then(function(OMDbSearchResults) {
       searchResultsArray = OMDbSearchResults;
       console.log("searchResultsArray", searchResultsArray);
-      dataControl.getUsersMovies()
+      dataControl.getMovies()
       .then(function(firebaseMovies) {
-        var firebaseMoviesArray = _.values(firebaseMovies).sort(function(a, b) {
+        console.log("firebaseMovies", firebaseMovies);
+        var firebaseMoviesArray = firebaseMovies.sort(function(a, b) {
           if (a.Title[0] < b.Title[0]) {
             return -1;
           }
@@ -81,7 +87,7 @@ require(
           }
         });
         combinedMoviesArray = filteredSearchResultsArray.concat(firebaseMoviesArray);
-        domControl.loadProfileHbs(combinedMoviesArray);
+        movieTemplates.loadProfileHbs(combinedMoviesArray);
       });
     });
   });
@@ -148,7 +154,7 @@ require(
     }
   });
   slider.noUiSlider.on('slide', function(values){
-      dataControl.getUsersMovies()
+      dataControl.getMovies()
       .then(function(allMovies){
         var starValue = Math.round(values[0]);
         var filteredMovies = filtering.filterByStars(allMovies, starValue);
