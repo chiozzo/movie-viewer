@@ -21,8 +21,8 @@ requirejs.config({
 });
 
 require(
-  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "Authenticate"],
-  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate) {
+  ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "Authenticate", "movieTemplates"],
+  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, movieTemplates) {
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
@@ -61,9 +61,10 @@ require(
     .then(function(OMDbSearchResults) {
       searchResultsArray = OMDbSearchResults;
       console.log("searchResultsArray", searchResultsArray);
-      dataControl.getUsersMovies()
+      dataControl.getMovies()
       .then(function(firebaseMovies) {
-        var firebaseMoviesArray = _.values(firebaseMovies).sort(function(a, b) {
+        console.log("firebaseMovies", firebaseMovies);
+        var firebaseMoviesArray = firebaseMovies.sort(function(a, b) {
           if (a.Title[0] < b.Title[0]) {
             return -1;
           }
@@ -81,7 +82,7 @@ require(
           }
         });
         combinedMoviesArray = filteredSearchResultsArray.concat(firebaseMoviesArray);
-        domControl.loadProfileHbs(combinedMoviesArray);
+        movieTemplates.loadProfileHbs(combinedMoviesArray);
       });
     });
   });
