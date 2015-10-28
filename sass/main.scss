@@ -63,3 +63,24 @@ body {
 .imgWrap:hover .close {
     opacity: 1;
 }
+
+.noUi-handle {
+  background: url("../images/happySliderStar.png") ;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  border: none;
+  box-shadow: none;
+}
+
+.noUi-handle:after, .noUi-handle:before {
+  display: none;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 45px;
+  height: 50px;
+  left: -17px;
+  top: -15px;
+}
