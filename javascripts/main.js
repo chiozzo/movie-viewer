@@ -1,3 +1,6 @@
+
+
+
 requirejs.config({
   baseUrl: "./javascripts",
   paths:{
@@ -133,7 +136,7 @@ require(
 
   $(document).on("click", "#filterToWatch", function(){
     dataControl.getMovies()
-      .then(function(allMovies) {
+      .then(function(allMovies){
         templates.loadProfileHbs(dataControl.setFilterNotWatched(allMovies));
       });
   });

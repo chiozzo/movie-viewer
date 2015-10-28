@@ -1,3 +1,4 @@
+
 define(["jquery", "q", "firebase"],
   function($, q, firebase) {
 
@@ -55,21 +56,6 @@ return {
   // },
 
 
-  //     //add movie to specific users library
-  // addMovie : function(imdbID) {
-  //   //declare var for userInput
-  //   var deferred = q.defer();
-  //   //ajax call using promises
-  //   $.ajax({ url : "http://www.omdbapi.com/?i=" + imdbID + "&y=&plot=short&r=json" }).done(function(myMovie){
-  //       console.log("myMovie", myMovie);
-  //        //return movie object Search key value
-  //        deferred.resolve(myMovie);
-  //     })
-  //     .fail(function(xhr, status, error){
-  //       deferred.reject(error);
-  //     });
-  //       return deferred.promise;
-  //     },
 
 // ====ADD MOVIE -----------
 
@@ -126,7 +112,7 @@ return {
       markWatched: function(imdbID, thisButton) {
       $(thisButton).attr("watched", true);
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({watched: true});
-      $(thisButton).removeClass("btn-default");
+      $(thisButton).removeClass("btn-danger");
       $(thisButton).addClass("btn-success");
       $(thisButton).text("Watched");
     },
@@ -134,7 +120,7 @@ return {
       $(thisButton).attr("watched", false);
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({watched: false});
       $(thisButton).removeClass("btn-success");
-      $(thisButton).addClass("btn-default");
+      $(thisButton).addClass("btn-danger");
       $(thisButton).text("Not Watched");
     },
 
@@ -142,8 +128,8 @@ return {
 
      setFilterWatched: function(allMovies) {
         var filteredWatchedMovies = allMovies.filter(function(movie){
-        console.log(movie.Watched);
-        if ( movies.Watched === true) {
+        console.log(movie.watched);
+        if ( movie.watched === true) {
           return movie;
         // console.log("success of filter");
         }
@@ -154,8 +140,8 @@ return {
 
     setFilterNotWatched:  function(allMovies) {
       var filteredNotWatchedMovies = allMovies.filter(function(movie){
-        console.log(movie.Watched);
-        if ( movies.Watched === false ) {
+        console.log(movie.watched);
+        if ( movie.watched === false ) {
           return movie;
         }
       });
@@ -166,6 +152,16 @@ return {
     changeRating: function(ImdbID, ratingValue) {
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(ImdbID).update({rating: ratingValue});
 
+    },
+
+      //DELETE REMOVE MOVIE
+    deleteUsersMovies: function(movieID) {
+            firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(movieID).remove(function(error) {
+        if (error) {
+          console.log("there was an error", error);
+        }
+      });
+
     }
 
 
@@ -173,4 +169,9 @@ return {
   };
 
 });
+
+
+
+
+
 
