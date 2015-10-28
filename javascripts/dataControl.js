@@ -125,7 +125,7 @@ return {
     },
 
 // FILTERS=================
-
+  // WATCHED
      setFilterWatched: function(allMovies) {
         var filteredWatchedMovies = allMovies.filter(function(movie){
         console.log(movie.watched);
@@ -138,6 +138,8 @@ return {
       return filteredWatchedMovies;
     },
 
+
+// SET FILTER NOT WATCHED
     setFilterNotWatched:  function(allMovies) {
       var filteredNotWatchedMovies = allMovies.filter(function(movie){
         console.log(movie.watched);
@@ -148,10 +150,18 @@ return {
       console.log("filteredNotWatchedMovies", filteredNotWatchedMovies);
       return filteredNotWatchedMovies;
     },
-
+// changing rating
     changeRating: function(ImdbID, ratingValue) {
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(ImdbID).update({rating: ratingValue});
 
+    },
+
+    slideFilter: function(ImdbID, ratingValue) {
+      var slideMovieFilter = allMovies.filter(function(starNum){
+        if(movie.rating == starNum) {
+          return starNum;
+        }
+      });
     },
 
       //DELETE REMOVE MOVIE

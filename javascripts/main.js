@@ -99,14 +99,27 @@ require(
       });
     $(this).remove();
   });
+// This will delete from firebase
+  // $(document).on("click", ".deleteButton", function() {
+  //   var imdbid = $(this).attr("imdbid");
+  //   dataControl.deleteUsersMovies(imdbid);
+  //   $(this).parents(".thisMovie").hide('slow', function() {
+  //     $(this).remove();
+  //   });
+  // });
 
-  $(document).on("click", ".deleteButton", function() {
+
+
+  // This will just hide instead of delete
+
+    $(document).on("click", ".deleteButton", function() {
     var imdbid = $(this).attr("imdbid");
-    dataControl.deleteUsersMovies(imdbid);
+    // dataControl.deleteUsersMovies(imdbid);
     $(this).parents(".thisMovie").hide('slow', function() {
-      $(this).remove();
+      $(this).hide();
     });
   });
+
 
   $(document).on('click', '.watchedButton', function() {
     var thisMovie = $(this).attr("imdbid");
@@ -156,7 +169,7 @@ require(
       .then(function(allMovies){
         var starValue = Math.round(values[0]);
         var filteredMovies = filtering.filterByStars(allMovies, starValue);
-        templates.loadProfileHbs(filteredMovies);
+        templates.loadProfileHbs(dataControl.slideFilter(allMovies));
       });
   });
 });
