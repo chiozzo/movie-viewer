@@ -117,7 +117,7 @@ require(
     var imdbid = $(this).attr("imdbid");
     // dataControl.deleteUsersMovies(imdbid);
     $(this).parents(".thisMovie").hide('slow', function() {
-      $(this).hide();
+      $(this).remove();
     });
   });
 
@@ -178,7 +178,6 @@ require(
       dataControl.getMovies()
       .then(function(allMovies){
         var starValue = Math.round(values[0]);
-        var filteredMovies = filtering.filterByStars(allMovies, starValue);
         templates.loadProfileHbs(dataControl.slideFilter(allMovies));
       });
   });
