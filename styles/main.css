@@ -58,7 +58,8 @@ body {
   -o-background-size: cover;
   background-size: cover;
   border: none;
-  box-shadow: none; }
+  box-shadow: none;
+  cursor: pointer; }
 
 .noUi-handle:after, .noUi-handle:before {
   display: none; }
