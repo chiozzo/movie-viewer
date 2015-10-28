@@ -1,3 +1,6 @@
+
+
+
 requirejs.config({
   baseUrl: "./javascripts",
   paths:{
@@ -23,7 +26,7 @@ requirejs.config({
 require(
 
   ["jquery", "q", "lodash", "scotch-panels", "bootstrap-star-rating", "nouislider", "dataControl", "Authenticate", "movieTemplates"],
-  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, movieTemplates) {
+  function($, q, _, scotchPanels, bootstrapStarRating, noUiSlider, dataControl, authenticate, templates) {
 
   var firebaseRef = new Firebase("https://nss-movie-history.firebaseio.com");
 
@@ -83,7 +86,7 @@ require(
           }
         });
         combinedMoviesArray = filteredSearchResultsArray.concat(firebaseMoviesArray);
-        movieTemplates.loadProfileHbs(combinedMoviesArray);
+        templates.loadProfileHbs(combinedMoviesArray);
       });
     });
   });
@@ -97,14 +100,27 @@ require(
       });
     $(this).remove();
   });
+// This will delete from firebase
+  // $(document).on("click", ".deleteButton", function() {
+  //   var imdbid = $(this).attr("imdbid");
+  //   dataControl.deleteUsersMovies(imdbid);
+  //   $(this).parents(".thisMovie").hide('slow', function() {
+  //     $(this).remove();
+  //   });
+  // });
 
-  $(document).on("click", ".deleteButton", function() {
+
+
+  // This will just hide instead of delete
+
+    $(document).on("click", ".deleteButton", function() {
     var imdbid = $(this).attr("imdbid");
-    dataControl.deleteUsersMovies(imdbid);
+    // dataControl.deleteUsersMovies(imdbid);
     $(this).parents(".thisMovie").hide('slow', function() {
-      $(this).remove();
+      $(this).hide();
     });
   });
+
 
   $(document).on('click', '.watchedButton', function() {
     var thisMovie = $(this).attr("imdbid");
@@ -119,23 +135,23 @@ require(
   $(document).on('rating.change', '.starRating', function(event, value, caption) {
     var thisButton = $(this);
     var thisMovie = $(this).attr("imdbid");
-    dataControl.changeRating(thisMovie, thisButton, value);
+    dataControl.changeRating(thisMovie, value);
   });
 
 // filter for movies watched
   $(document).on("click", "#filterWatched", function(){
-    dataControl.getUsersMovies()
+    dataControl.getMovies()
      .then(function(allMovies) {
-        domControl.loadProfileHbs(filtering.setFilterWatched(allMovies));
+        templates.loadProfileHbs(dataControl.setFilterWatched(allMovies));
     });
   });
 
 // filter for movies NOT watched
 
   $(document).on("click", "#filterToWatch", function(){
-    dataControl.getUsersMovies()
-      .then(function(allMovies) {
-        domControl.loadProfileHbs(filtering.setFilterNotWatched(allMovies));
+    dataControl.getMovies()
+      .then(function(allMovies){
+        templates.loadProfileHbs(dataControl.setFilterNotWatched(allMovies));
       });
   });
 
@@ -154,7 +170,7 @@ require(
       .then(function(allMovies){
         var starValue = Math.round(values[0]);
         var filteredMovies = filtering.filterByStars(allMovies, starValue);
-        domControl.loadProfileHbs(filteredMovies);
+        templates.loadProfileHbs(dataControl.slideFilter(allMovies));
       });
   });
 });
