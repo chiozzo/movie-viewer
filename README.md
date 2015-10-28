@@ -1,7 +1,7 @@
-#Suggested Planning
+# Suggested Planning
 
 ### All people:
-* Plan each button and what it will do in *[Moqups](https://moqups.com/)*
+### * Plan each button and what it will do in *[Moqups](https://moqups.com/)*
 * Plan which module each button feature will go in.
 ### Person 1:
 * HTML/CSS, main.js(coordinated w/2), Event Handlers
