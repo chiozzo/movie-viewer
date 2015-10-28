@@ -1,13 +1,13 @@
 #Suggested Planning
 
 ### All people:
-	* Plan each button and what it will do in *[Moqups](https://moqups.com/)*
-	* Plan which module each button feature will go in.
+* Plan each button and what it will do in *[Moqups](https://moqups.com/)*
+* Plan which module each button feature will go in.
 ### Person 1:
-	* HTML/CSS, main.js(coordinated w/2), Event Handlers
+* HTML/CSS, main.js(coordinated w/2), Event Handlers
 ### Person 2:
-	* domControl modules
+* domControl modules
 * ### Person 3:
-	* dataControl modules
+* dataControl modules
 * ### Person 4:
-	* other modules (e.g. filter, authenticate, etc)
+* other modules (e.g. filter, authenticate, etc)
