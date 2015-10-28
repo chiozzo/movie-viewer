@@ -126,7 +126,7 @@ return {
       markWatched: function(imdbID, thisButton) {
       $(thisButton).attr("watched", true);
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({watched: true});
-      $(thisButton).removeClass("btn-default");
+      $(thisButton).removeClass("btn-danger");
       $(thisButton).addClass("btn-success");
       $(thisButton).text("Watched");
     },
@@ -134,7 +134,7 @@ return {
       $(thisButton).attr("watched", false);
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(imdbID).update({watched: false});
       $(thisButton).removeClass("btn-success");
-      $(thisButton).addClass("btn-default");
+      $(thisButton).addClass("btn-danger");
       $(thisButton).text("Not Watched");
     },
 
