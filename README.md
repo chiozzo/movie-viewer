@@ -1,6 +1,6 @@
 #Suggested Planning
 
-##All people
+###*All people
 
 *All people: Plan each button and what it will do; Plan which module each button feature will go in.
 *Person 1: HTML/CSS, main.js(coordinated w/2), Event Handlers
