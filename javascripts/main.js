@@ -160,9 +160,18 @@ require(
     start: 0,
     connect: 'lower',
     step: 1,
+    tooltips: true,
     range: {
       'min': 0,
       'max': 10
+    },
+    format: {
+      to: function ( value ) {
+      return Math.floor(value);
+      },
+      from: function ( value ) {
+      return Math.floor(value);
+      }
     }
   });
   slider.noUiSlider.on('slide', function(values){
