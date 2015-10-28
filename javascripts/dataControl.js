@@ -15,7 +15,6 @@ return {
     $.ajax({ url : "http://www.omdbapi.com/?s=" + userInput + "&type=movie&r=json" })
     .done(function(movieMatches){
       var searchResultsArray = movieMatches.Search;
-      console.log("searchResultsArray", searchResultsArray);
       var mappedSearchResultsArray = searchResultsArray.map(function(currentValue) {
         if(currentValue.Poster === "N/A") {
           currentValue.Poster = "../images/defaultPoster.jpg";
@@ -46,15 +45,6 @@ return {
       });
       return deferred.promise;
     },
-
-
-
-
-  //search user library WIP
-  // myLib : function(){
-  //   var searchInput = $("#user_input").val();
-  // },
-
 
 
 // ====ADD MOVIE -----------
@@ -97,7 +87,6 @@ return {
         $.ajax({
           url:"https://movie-viewe.firebaseio.com/users/"+ firebaseRef.getAuth().uid +"/movies.json"
         }).done(function(firebaseData){
-          // console.log("firebase data : ", firebaseData);
           var firebaseMoviesArray = _.values(firebaseData);
           deferred.resolve(firebaseMoviesArray);
         })
@@ -128,13 +117,11 @@ return {
   // WATCHED
      setFilterWatched: function(allMovies) {
         var filteredWatchedMovies = allMovies.filter(function(movie){
-        console.log(movie.watched);
         if ( movie.watched === true) {
           return movie;
         // console.log("success of filter");
         }
       });
-      console.log("filteredWatchedMovies", filteredWatchedMovies);
       return filteredWatchedMovies;
     },
 
@@ -142,12 +129,10 @@ return {
 // SET FILTER NOT WATCHED
     setFilterNotWatched:  function(allMovies) {
       var filteredNotWatchedMovies = allMovies.filter(function(movie){
-        console.log(movie.watched);
         if ( movie.watched === false ) {
           return movie;
         }
       });
-      console.log("filteredNotWatchedMovies", filteredNotWatchedMovies);
       return filteredNotWatchedMovies;
     },
 // changing rating
@@ -155,13 +140,18 @@ return {
       firebaseRef.child('users').child(firebaseRef.getAuth().uid).child('movies').child(ImdbID).update({rating: ratingValue});
 
     },
+//slideFilter based on star ratings - display all movies at rating 0
 
-    slideFilter: function(ImdbID, ratingValue) {
-      var slideMovieFilter = allMovies.filter(function(starNum){
-        if(movie.rating == starNum) {
-          return starNum;
+    slideFilter: function(allMovies, sliderValue) {
+      var slideMovieFilter = allMovies.filter(function(eachMovie){
+        if (sliderValue == 0) {
+
+          return eachMovie;
+        } else if (sliderValue == eachMovie.rating) {
+          return eachMovie;
         }
       });
+          return slideMovieFilter;
     },
 
       //DELETE REMOVE MOVIE
