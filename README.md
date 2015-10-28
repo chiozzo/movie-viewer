@@ -1,4 +1,5 @@
-# Suggested Planning
+Suggested Planning
+===
 
 ### All people:
 * Plan each button and what it will do in *[Moqups](https://moqups.com/)*
